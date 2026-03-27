@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FAQS } from "@/lib/constants";
-import { cn } from "@/lib/utils";
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
@@ -12,36 +11,28 @@ export default function FAQ() {
     <section className="section-padding bg-white">
       <div className="container-custom max-w-3xl">
         <div className="text-center mb-12">
-          <span className="section-badge mb-4">FAQ</span>
-          <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: "#0F2460" }}>
+          <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "#00C853" }}>
+            FAQ
+          </p>
+          <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#1A202C" }}>
             Frequently asked questions
           </h2>
-          <p className="text-lg" style={{ color: "#4A5568" }}>
-            Everything you need to know about the platform.
-          </p>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           {FAQS.map((faq, i) => (
-            <div
-              key={i}
-              className="rounded-2xl overflow-hidden transition-all duration-200"
-              style={{
-                border: open === i ? "1px solid #D8E0FF" : "1px solid #EEF2FF",
-                background: open === i ? "#F8F9FF" : "white",
-              }}
-            >
+            <div key={i} className="rounded-xl overflow-hidden" style={{ border: "1px solid #EDF2F7" }}>
               <button
-                className="w-full flex items-center justify-between p-5 text-left"
+                className="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
                 onClick={() => setOpen(open === i ? null : i)}
               >
-                <span className="font-semibold text-sm pr-4" style={{ color: "#0F2460" }}>
+                <span className="font-semibold text-sm pr-4" style={{ color: "#1A202C" }}>
                   {faq.q}
                 </span>
                 <ChevronDown
-                  size={18}
+                  size={16}
                   style={{
-                    color: "#1A3C8F",
+                    color: "#A0AEC0",
                     transform: open === i ? "rotate(180deg)" : "rotate(0deg)",
                     transition: "transform 0.2s ease",
                     flexShrink: 0,
@@ -49,8 +40,8 @@ export default function FAQ() {
                 />
               </button>
               {open === i && (
-                <div className="px-5 pb-5">
-                  <p className="text-sm leading-relaxed" style={{ color: "#4A5568" }}>
+                <div className="px-4 pb-4">
+                  <p className="text-sm leading-relaxed" style={{ color: "#718096" }}>
                     {faq.a}
                   </p>
                 </div>
