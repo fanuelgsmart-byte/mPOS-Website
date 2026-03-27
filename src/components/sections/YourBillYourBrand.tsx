@@ -1,112 +1,134 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Palette, Type, Image, Star } from "lucide-react";
-import { AnimatedSection, AnimatedItem } from "@/components/ui/AnimatedSection";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { staggerContainer, fadeUp, fadeRight } from "@/lib/motion";
 
-const THEMES = [
-  { name: "Stylish",   accent: "#1A3C8F", bg: "#EEF2FF" },
-  { name: "Luxury",    accent: "#92400E", bg: "#FFFBEB" },
-  { name: "Advanced",  accent: "#00C853", bg: "#ECFDF5" },
-  { name: "Classic",   accent: "#374151", bg: "#F9FAFB" },
-];
+const TABS = ["Thermal Prints", "A4 Prints", "A5 Prints"];
 
-const POINTS = [
-  { icon: Palette, title: "Custom Colors",     desc: "Match your brand's color across all documents" },
-  { icon: Type,    title: "Logo & Details",    desc: "Business logo, name, TIN & address on every invoice" },
-  { icon: Image,   title: "Multiple Themes",   desc: "Choose from Stylish, Luxury, Advanced & Classic" },
-  { icon: Star,    title: "Signature & Terms", desc: "Authorized signatory and custom T&Cs on every doc" },
+const TEMPLATES = [
+  { name: "Classic", accent: "#374151", bg: "#F9FAFB" },
+  { name: "Modern", accent: "#22C55E", bg: "#F0FDF4" },
+  { name: "Luxury", accent: "#92400E", bg: "#FFFBEB" },
+  { name: "Stylish", accent: "#2563EB", bg: "#EFF6FF" },
 ];
 
 export default function YourBillYourBrand() {
+  const [activeTab, setActiveTab] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
-    <section className="section-padding bg-white">
+    <section id="invoicing" ref={ref} className="section-padding bg-white">
       <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <p className="section-label">Customization</p>
+          <h2>Your Bill, Your Brand</h2>
+          <p className="mt-3 text-gray-500 max-w-lg mx-auto">
+            Create professional invoices that represent your business. Choose from multiple
+            themes, add your logo, and stay MoR compliant automatically.
+          </p>
+        </motion.div>
 
-          {/* Left — invoice previews */}
-          <AnimatedSection direction="left">
-            <AnimatedItem>
-              <div className="grid grid-cols-2 gap-4">
-                {THEMES.map((theme, i) => (
-                  <motion.div
-                    key={theme.name}
-                    className="rounded-xl overflow-hidden cursor-pointer"
-                    style={{ border: "1px solid #E5E7EB", boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}
-                    whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(0,0,0,0.1)" }}
-                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    // @ts-expect-error framer-motion transition prop
-                    transition_={{ delay: i * 0.08, duration: 0.5 }}
+        {/* Tab Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="flex justify-center gap-2 mb-10"
+        >
+          {TABS.map((tab, i) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(i)}
+              className="px-5 py-2 rounded-full text-sm font-medium transition-all"
+              style={{
+                background: activeTab === i ? "#22C55E" : "transparent",
+                color: activeTab === i ? "#FFFFFF" : "#6B7280",
+                border: activeTab === i ? "none" : "1px solid #E5E7EB",
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Template Gallery */}
+        <motion.div
+          variants={staggerContainer(0.08)}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-4xl mx-auto"
+        >
+          {TEMPLATES.map((theme) => (
+            <motion.div
+              key={theme.name}
+              variants={fadeUp}
+              className="rounded-2xl overflow-hidden cursor-pointer group"
+              style={{ border: "1px solid #E5E7EB" }}
+              whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(0,0,0,0.08)" }}
+              transition={{ duration: 0.2 }}
+            >
+              {/* Invoice Preview */}
+              <div className="p-4" style={{ background: theme.bg }}>
+                <div className="h-2 w-12 rounded-full mb-3" style={{ background: theme.accent }} />
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <div className="h-1.5 w-14 rounded mb-1" style={{ background: theme.accent, opacity: 0.5 }} />
+                    <div className="h-1 w-9 rounded" style={{ background: "#D1D5DB" }} />
+                  </div>
+                  <span
+                    className="text-[7px] font-bold px-1.5 py-0.5 rounded"
+                    style={{ background: theme.accent, color: "white" }}
                   >
-                    <div className="p-3" style={{ background: theme.bg }}>
-                      <div className="h-2 w-14 rounded-full mb-2" style={{ background: theme.accent }} />
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <div className="h-1.5 w-16 rounded mb-1" style={{ background: theme.accent, opacity: 0.5 }} />
-                          <div className="h-1 w-10 rounded" style={{ background: "#D1D5DB" }} />
-                        </div>
-                        <span className="text-[7px] font-bold px-1.5 py-0.5 rounded"
-                          style={{ background: theme.accent, color: "white" }}>INVOICE</span>
-                      </div>
-                      {[1,2,3].map(r => (
-                        <div key={r} className="flex gap-1 mb-1">
-                          <div className="h-1 rounded flex-[3]" style={{ background: "#D1D5DB" }} />
-                          <div className="h-1 rounded flex-1" style={{ background: "#D1D5DB" }} />
-                          <div className="h-1 rounded flex-1" style={{ background: "#D1D5DB" }} />
-                        </div>
-                      ))}
-                      <div className="flex justify-between items-center mt-2 pt-2"
-                        style={{ borderTop: `1px solid ${theme.accent}30` }}>
-                        <div className="h-1 w-6 rounded" style={{ background: "#D1D5DB" }} />
-                        <div className="h-1.5 w-10 rounded" style={{ background: theme.accent }} />
-                      </div>
-                    </div>
-                    <div className="px-3 py-2 text-center bg-white">
-                      <p style={{ fontSize: "10px", fontWeight: 600, color: theme.accent }}>{theme.name}</p>
-                    </div>
-                  </motion.div>
+                    INVOICE
+                  </span>
+                </div>
+                {[1, 2, 3].map((r) => (
+                  <div key={r} className="flex gap-1 mb-1">
+                    <div className="h-1 rounded flex-[3]" style={{ background: "#D1D5DB" }} />
+                    <div className="h-1 rounded flex-1" style={{ background: "#D1D5DB" }} />
+                    <div className="h-1 rounded flex-1" style={{ background: "#D1D5DB" }} />
+                  </div>
                 ))}
+                <div
+                  className="flex justify-between items-center mt-3 pt-2"
+                  style={{ borderTop: `1px solid ${theme.accent}25` }}
+                >
+                  <div className="h-1 w-6 rounded" style={{ background: "#D1D5DB" }} />
+                  <div className="h-1.5 w-10 rounded" style={{ background: theme.accent }} />
+                </div>
               </div>
-            </AnimatedItem>
-          </AnimatedSection>
+              {/* Label */}
+              <div className="px-4 py-3 bg-white text-center">
+                <p className="text-xs font-semibold" style={{ color: theme.accent }}>{theme.name}</p>
+                <p className="text-[10px] text-gray-400 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                  Start Using →
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
-          {/* Right — content */}
-          <AnimatedSection direction="right">
-            <AnimatedItem>
-              <p className="section-label">Customization</p>
-            </AnimatedItem>
-            <AnimatedItem>
-              <h2 className="mb-4">Your bill, your brand</h2>
-            </AnimatedItem>
-            <AnimatedItem>
-              <p style={{ color: "#6B7280", marginBottom: "2rem" }}>
-                Create professional invoices that represent your business. Multiple themes, your logo,
-                custom colors, and TIN for MoR compliance — with automatic IRN and QR code on every invoice.
-              </p>
-            </AnimatedItem>
-            <AnimatedSection className="flex flex-col gap-4" stagger={0.07} direction="right">
-              {POINTS.map((p) => {
-                const Icon = p.icon;
-                return (
-                  <AnimatedItem key={p.title}>
-                    <div className="flex items-start gap-3">
-                      <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ background: "#EEF2FF" }}>
-                        <Icon size={16} color="#1A3C8F" strokeWidth={1.75} />
-                      </div>
-                      <div>
-                        <h4 style={{ marginBottom: "2px" }}>{p.title}</h4>
-                        <p style={{ fontSize: "0.8125rem", color: "#6B7280" }}>{p.desc}</p>
-                      </div>
-                    </div>
-                  </AnimatedItem>
-                );
-              })}
-            </AnimatedSection>
-          </AnimatedSection>
-        </div>
+        {/* Feature points */}
+        <motion.div
+          variants={staggerContainer(0.06)}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          className="flex flex-wrap justify-center gap-6 mt-10 text-sm text-gray-500"
+        >
+          {["Custom Colors", "Your Logo & TIN", "Multiple Themes", "IRN & QR Code"].map((point) => (
+            <motion.span key={point} variants={fadeRight} className="flex items-center gap-2">
+              <span style={{ color: "#22C55E" }}>✓</span> {point}
+            </motion.span>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

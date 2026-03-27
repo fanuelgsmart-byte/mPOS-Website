@@ -9,8 +9,8 @@ const FOOTER_COLS = [
     title: "Product",
     links: [
       { label: "Features", href: "#features" },
-      { label: "POS Billing", href: "#pos" },
-      { label: "Pricing", href: "#pricing" },
+      { label: "Compliance", href: "#compliance" },
+      { label: "Invoicing", href: "#invoicing" },
       { label: "Download App", href: "#download" },
     ],
   },
@@ -52,42 +52,36 @@ const SOCIAL = [
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "#0F2460" }} className="text-white">
-      <div className="container-custom py-16">
+    <footer style={{ background: "#111827" }} className="text-white">
+      <div className="container-custom py-14">
         {/* Top row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-12">
           {/* Brand column */}
-          <div className="lg:col-span-2">
+          <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-black text-lg"
-                style={{ background: "linear-gradient(135deg, #1A3C8F, #2952B3)" }}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+                style={{ background: "#22C55E" }}
               >
                 M
               </div>
-              <span className="text-xl font-black">{SITE_NAME}</span>
+              <span className="text-lg font-bold">{SITE_NAME}</span>
             </div>
-            <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-xs">
-              Ethiopia&apos;s complete business management platform. Built for
-              Ethiopian businesses, in Amharic and English.
+            <p className="text-white/50 text-sm leading-relaxed mb-5 max-w-xs">
+              Ethiopia&apos;s complete business management platform.
+              Built for Ethiopian businesses, in Amharic and English.
             </p>
             {/* Social icons */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {SOCIAL.map(({ icon: Icon, href, label }) => (
                 <Link
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
-                  style={{ background: "rgba(255,255,255,0.1)" }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "rgba(255,255,255,0.2)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "rgba(255,255,255,0.1)")
-                  }
+                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-white/15"
+                  style={{ background: "rgba(255,255,255,0.08)" }}
                 >
-                  <Icon size={16} />
+                  <Icon size={14} />
                 </Link>
               ))}
             </div>
@@ -96,15 +90,15 @@ export default function Footer() {
           {/* Link columns */}
           {FOOTER_COLS.map((col) => (
             <div key={col.title}>
-              <h3 className="text-white font-semibold text-sm mb-4 uppercase tracking-wide">
+              <h4 className="text-white font-semibold text-xs mb-4 uppercase tracking-wider">
                 {col.title}
-              </h3>
-              <ul className="flex flex-col gap-3">
+              </h4>
+              <ul className="flex flex-col gap-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-white/60 text-sm hover:text-white transition-colors"
+                      className="text-white/45 text-sm hover:text-white transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -115,70 +109,17 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* App badges row */}
-        <div
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 py-8 border-t"
-          style={{ borderColor: "rgba(255,255,255,0.1)" }}
-        >
-          <div>
-            <p className="text-white/60 text-sm mb-3">Available on</p>
-            <div className="flex items-center gap-3">
-              <AppBadge store="google" />
-              <AppBadge store="apple" />
-            </div>
-          </div>
-          <div className="text-right">
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold mb-2"
-              style={{ background: "#E8FFF2", color: "#00C853" }}
-            >
-              ✓ MoR e-Invoice Certified
-            </div>
-            <p className="text-white/40 text-xs">INSA Security Standards Compliant</p>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div
-          className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 border-t"
-          style={{ borderColor: "rgba(255,255,255,0.1)" }}
-        >
-          <p className="text-white/40 text-xs">
-            © 2025 {SITE_NAME}. All rights reserved. Made with ❤️ for Ethiopia.
+        {/* Divider */}
+        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-white/30 text-xs">
+            &copy; 2025 {SITE_NAME}. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <span className="text-white/40 text-xs">🇪🇹 Addis Ababa, Ethiopia</span>
-            <span className="text-white/40 text-xs">ETB • Amharic • EN</span>
+          <div className="flex items-center gap-4 text-white/30 text-xs">
+            <span>Addis Ababa, Ethiopia</span>
+            <span>ETB &middot; Amharic &middot; EN</span>
           </div>
         </div>
       </div>
     </footer>
-  );
-}
-
-function AppBadge({ store }: { store: "google" | "apple" }) {
-  return (
-    <div
-      className="flex items-center gap-2 px-4 py-2 rounded-xl border cursor-pointer transition-colors"
-      style={{ borderColor: "rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.05)" }}
-    >
-      {store === "google" ? (
-        <>
-          <span className="text-lg">▶</span>
-          <div>
-            <p className="text-white/50 text-[10px]">Get it on</p>
-            <p className="text-white text-xs font-semibold">Google Play</p>
-          </div>
-        </>
-      ) : (
-        <>
-          <span className="text-lg"></span>
-          <div>
-            <p className="text-white/50 text-[10px]">Download on the</p>
-            <p className="text-white text-xs font-semibold">App Store</p>
-          </div>
-        </>
-      )}
-    </div>
   );
 }

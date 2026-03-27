@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { SITE_NAME, NAV_LINKS } from "@/lib/constants";
 import Button from "@/components/ui/Button";
 
 export default function Navbar() {
@@ -12,109 +12,110 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <motion.header
-      className="fixed top-0 left-0 right-0 z-50"
-      animate={scrolled ? "scrolled" : "top"}
-      variants={{
-        top:      { backgroundColor: "rgba(255,255,255,0)", borderBottomColor: "transparent" },
-        scrolled: { backgroundColor: "rgba(255,255,255,0.92)", borderBottomColor: "#E5E7EB" },
-      }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      style={{
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottomWidth: "1px",
-        borderBottomStyle: "solid",
-      }}
-    >
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <header
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-200"
+        style={{
+          backgroundColor: scrolled ? "rgba(255,255,255,0.98)" : "#FFFFFF",
+          boxShadow: scrolled ? "0 1px 3px rgba(0,0,0,0.05)" : "none",
+          borderBottom: scrolled ? "none" : "1px solid #F3F4F6",
+        }}
+      >
+        <div className="container-custom flex items-center justify-between h-16 lg:h-[68px]">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm"
-              style={{ background: "linear-gradient(135deg, #1A3C8F, #2952B3)" }}>
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+              style={{ background: "#22C55E" }}
+            >
               M
             </div>
-            <span className="text-[1.0625rem] font-bold tracking-tight" style={{ color: "#111827" }}>
-              {SITE_NAME}
-            </span>
+            <span className="text-lg font-bold text-gray-900">{SITE_NAME}</span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-7">
+          <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <Link key={link.label} href={link.href} className="nav-link">
+              <Link key={link.href} href={link.href} className="nav-link">
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link href="#download" className="nav-link text-sm">Sign In</Link>
-            <Button href="#download" variant="primary" className="text-sm" style={{ minHeight: "38px", padding: "0 1.25rem" }}>
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="#download" className="nav-link">
+              Sign In
+            </Link>
+            <Button
+              href="#download"
+              variant="primary"
+              style={{ minHeight: "40px", padding: "0 1.25rem", borderRadius: "8px" }}
+            >
               Get Started Free
             </Button>
           </div>
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 rounded-lg"
+            className="md:hidden p-2 -mr-2 rounded-lg hover:bg-gray-50 transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
-            {menuOpen
-              ? <X size={20} color="#111827" />
-              : <Menu size={20} color="#111827" />}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile overlay */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            key="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden bg-white border-t"
-            style={{ borderColor: "#E5E7EB" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-40 bg-white md:hidden"
+            style={{ paddingTop: "64px" }}
           >
-            <div className="container-custom py-4 flex flex-col gap-1">
+            <nav className="container-custom py-6 flex flex-col gap-1">
               {NAV_LINKS.map((link, i) => (
                 <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, y: 8 }}
+                  key={link.href}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.03, duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ delay: i * 0.04 }}
                 >
                   <Link
                     href={link.href}
-                    className="block py-2.5 text-sm font-medium"
-                    style={{ color: "#374151" }}
                     onClick={() => setMenuOpen(false)}
+                    className="block py-3.5 text-lg font-medium text-gray-900 border-b border-gray-100"
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
-              <div className="pt-3 mt-1 border-t" style={{ borderColor: "#F3F4F6" }}>
-                <Button href="#download" variant="primary" className="w-full justify-center text-sm">
+              <div className="mt-6 flex flex-col gap-3">
+                <Button href="#download" variant="primary" className="w-full justify-center">
                   Get Started Free
                 </Button>
+                <Button href="#download" variant="secondary" className="w-full justify-center">
+                  Sign In
+                </Button>
               </div>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+
+      {/* Spacer */}
+      <div className="h-16 lg:h-[68px]" />
+    </>
   );
 }

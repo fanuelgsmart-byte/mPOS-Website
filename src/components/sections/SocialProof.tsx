@@ -1,50 +1,52 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { staggerContainer, fadeUp } from "@/lib/motion";
+import { STATS } from "@/lib/constants";
 
-const PARTNERS = [
-  { name: "Telebirr", icon: "📱" },
-  { name: "CBE Birr", icon: "🏦" },
-  { name: "Ministry of Revenue", icon: "🏛️" },
-  { name: "INSA Certified", icon: "🔒" },
-  { name: "Google Play", icon: "▶️" },
-];
+const PARTNERS = ["Telebirr", "CBE Birr", "Ministry of Revenue", "INSA", "Google Play"];
 
 export default function SocialProof() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section ref={ref} style={{ background: "#F3F4F6", padding: "2.5rem 0", borderTop: "1px solid #E5E7EB" }}>
-      <div className="container-custom">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.4 }}
-          style={{ textAlign: "center", fontSize: "0.7rem", fontWeight: 600,
-            letterSpacing: "0.14em", textTransform: "uppercase", color: "#9CA3AF", marginBottom: "1.25rem" }}
+    <section ref={ref} style={{ background: "#F9FAFB", borderTop: "1px solid #F3F4F6" }}>
+      <div className="container-custom py-12 md:py-16">
+        {/* Stats Row */}
+        <motion.div
+          variants={staggerContainer(0.06)}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10"
         >
-          Integrated with &amp; certified by
-        </motion.p>
-
-        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
-          {PARTNERS.map((p, i) => (
-            <motion.div
-              key={p.name}
-              initial={{ opacity: 0, y: 8 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-2"
-              style={{ opacity: 0.55 }}
-              whileHover={{ opacity: 1 }}
-            >
-              <span style={{ fontSize: "1.125rem" }}>{p.icon}</span>
-              <span style={{ fontSize: "0.875rem", fontWeight: 500, color: "#374151" }}>{p.name}</span>
+          {STATS.map((stat) => (
+            <motion.div key={stat.label} variants={fadeUp} className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-gray-900">{stat.value}</p>
+              <p className="text-sm text-gray-500 mt-1">{stat.label}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+
+        {/* Partner Logos */}
+        <motion.div
+          variants={staggerContainer(0.05)}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          className="flex flex-wrap justify-center items-center gap-6 md:gap-10 pt-8 border-t border-gray-200"
+        >
+          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Trusted By</p>
+          {PARTNERS.map((name) => (
+            <motion.span
+              key={name}
+              variants={fadeUp}
+              className="text-sm font-medium text-gray-300 cursor-default"
+            >
+              {name}
+            </motion.span>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

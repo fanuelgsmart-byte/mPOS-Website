@@ -1,73 +1,78 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { AnimatedSection, AnimatedItem } from "@/components/ui/AnimatedSection";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { staggerContainer, fadeUp } from "@/lib/motion";
+import { FEATURES } from "@/lib/constants";
 import {
-  FileText, ShoppingCart, Package, Truck, Users, BarChart2,
-  Wallet, RefreshCw, MessageSquare, Calculator, Shield, Smartphone,
+  ShoppingCart,
+  FileText,
+  Package,
+  Truck,
+  Users,
+  BarChart2,
 } from "lucide-react";
 
-const FEATURES = [
-  { icon: FileText,      title: "Billing & Invoicing",        desc: "Professional invoices with IRN & QR code",             color: "#1A3C8F" },
-  { icon: ShoppingCart,  title: "POS Billing",                 desc: "Fast counter sales with barcode scanning",              color: "#00C853" },
-  { icon: Package,       title: "Inventory Management",        desc: "Multi-warehouse stock with FIFO/LIFO costing",          color: "#FF6B35" },
-  { icon: Truck,         title: "Purchase Management",         desc: "Manage suppliers, orders & settlements",                color: "#6C63FF" },
-  { icon: Users,         title: "Staff & Payroll",             desc: "Attendance, salary calculation & payslips",             color: "#E91E63" },
-  { icon: BarChart2,     title: "40+ Reports",                 desc: "Sales, stock, tax & payroll — PDF or Excel",           color: "#F59E0B" },
-  { icon: Wallet,        title: "Cash & Bank",                 desc: "Track all money movement across accounts",              color: "#0EA5E9" },
-  { icon: RefreshCw,     title: "Automated Bills",             desc: "Recurring invoices for regular customers",             color: "#10B981" },
-  { icon: MessageSquare, title: "SMS Marketing",               desc: "Promotional campaigns & payment reminders",             color: "#F97316" },
-  { icon: Calculator,    title: "VAT & TOT",                   desc: "Ethiopian tax calculations, automatic",                 color: "#8B5CF6" },
-  { icon: Shield,        title: "MoR e-Invoicing",             desc: "IRN, QR codes & daily Z-Report to MoR",                color: "#14B8A6" },
-  { icon: Smartphone,    title: "Works Everywhere",            desc: "Phone, tablet & desktop — online or offline",          color: "#64748B" },
-];
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
+  ShoppingCart,
+  FileText,
+  Package,
+  Truck,
+  Users,
+  BarChart2,
+};
 
 export default function Features() {
-  return (
-    <section id="features" className="section-padding bg-white">
-      <div className="container-custom">
-        <AnimatedSection className="text-center mb-14" direction="up">
-          <AnimatedItem>
-            <p className="section-label">Powerful Features</p>
-          </AnimatedItem>
-          <AnimatedItem>
-            <h2>Powerful features to help you<br className="hidden md:block" /> manage your business effortlessly</h2>
-          </AnimatedItem>
-          <AnimatedItem>
-            <p style={{ marginTop: "0.75rem", color: "#6B7280", maxWidth: "30rem", margin: "0.75rem auto 0" }}>
-              Every tool you need, in one place. No switching apps. No manual work.
-            </p>
-          </AnimatedItem>
-        </AnimatedSection>
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
-        <AnimatedSection
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10"
-          stagger={0.05}
+  return (
+    <section id="features" className="section-padding bg-white" ref={ref}>
+      <div className="container-custom">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
         >
-          {FEATURES.map((f) => {
-            const Icon = f.icon;
+          <p className="section-label">Features</p>
+          <h2>Powerful Features to Help You</h2>
+          <p className="mt-3 text-gray-500 max-w-xl mx-auto">
+            Everything you need to manage your business — billing, inventory, payroll,
+            and compliance — in one platform.
+          </p>
+        </motion.div>
+
+        {/* Feature Grid - 3x2 like Khatabook */}
+        <motion.div
+          variants={staggerContainer(0.08)}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {FEATURES.map((feature) => {
+            const Icon = ICON_MAP[feature.icon];
             return (
-              <AnimatedItem key={f.title}>
-                <motion.div
-                  className="text-center group"
-                  whileHover={{ y: -3 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              <motion.div
+                key={feature.title}
+                variants={fadeUp}
+                className="card p-6 group"
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: `${feature.color}10` }}
                 >
-                  <motion.div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3"
-                    style={{ background: `${f.color}14` }}
-                    whileHover={{ scale: 1.08 }}
-                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Icon size={22} color={f.color} strokeWidth={1.75} />
-                  </motion.div>
-                  <h4 style={{ fontSize: "0.875rem", marginBottom: "0.35rem" }}>{f.title}</h4>
-                  <p style={{ fontSize: "0.8125rem", color: "#6B7280", lineHeight: 1.55 }}>{f.desc}</p>
-                </motion.div>
-              </AnimatedItem>
+                  {Icon && <Icon size={22} color={feature.color} />}
+                </div>
+                <h3 className="mb-2">{feature.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
             );
           })}
-        </AnimatedSection>
+        </motion.div>
       </div>
     </section>
   );
