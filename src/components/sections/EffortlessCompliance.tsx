@@ -1,170 +1,167 @@
-import { FileCheck, QrCode, Clock, ShieldCheck, FileSpreadsheet, Bell } from "lucide-react";
+"use client";
 
-const COMPLIANCE_FEATURES = [
-  {
-    icon: FileCheck,
-    title: "Automatic IRN Generation",
-    desc: "Every sales invoice automatically gets a unique Invoice Reference Number as required by the Ministry of Revenue.",
-  },
-  {
-    icon: QrCode,
-    title: "QR Code on Every Invoice",
-    desc: "A scannable QR code is embedded on all invoices, readable by the tax authority's verification app.",
-  },
-  {
-    icon: Clock,
-    title: "Daily Z-Report Transmission",
-    desc: "At end of each business day, the Z-Report is compiled and sent to MoR automatically. No manual steps.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "INSA Security Compliant",
-    desc: "Built to meet INSA security standards. Your financial data is protected at the highest level.",
-  },
-  {
-    icon: FileSpreadsheet,
-    title: "VAT & TOT Ready",
-    desc: "Full Ethiopian tax support — VAT and TOT calculations, tax summaries, and classification-based reporting.",
-  },
-  {
-    icon: Bell,
-    title: "Void & Audit Trail",
-    desc: "Complete void reporting for cancelled receipts with audit logs for every transaction change.",
-  },
+import { motion } from "framer-motion";
+import { FileCheck, QrCode, Clock, ShieldCheck, FileSpreadsheet, Bell } from "lucide-react";
+import { AnimatedSection, AnimatedItem } from "@/components/ui/AnimatedSection";
+
+const POINTS = [
+  { icon: FileCheck,       title: "Automatic IRN",           desc: "Every invoice gets a unique IRN as required by MoR" },
+  { icon: QrCode,          title: "QR on Every Invoice",     desc: "Scannable QR readable by the tax authority's app" },
+  { icon: Clock,           title: "Daily Z-Report",          desc: "Compiled and sent to MoR automatically every night" },
+  { icon: ShieldCheck,     title: "INSA Compliant",          desc: "Built to meet Ethiopia's INSA security standards" },
+  { icon: FileSpreadsheet, title: "VAT & TOT Ready",         desc: "Full Ethiopian tax support with classification reporting" },
+  { icon: Bell,            title: "Void & Audit Trail",      desc: "Complete receipt void reporting and audit log" },
 ];
 
 export default function EffortlessCompliance() {
   return (
-    <section className="section-padding" style={{ background: "#F7FAFC" }}>
+    <section className="section-padding" style={{ background: "#F3F4F6" }}>
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Content */}
-          <div>
-            <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "#00C853" }}>
-              Compliance
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold leading-tight mb-4" style={{ color: "#1A202C" }}>
-              Experience effortless MoR
-              <br />
-              compliance with Meleket
-            </h2>
-            <p className="text-base leading-relaxed mb-8" style={{ color: "#718096" }}>
-              Stop worrying about tax compliance. Every invoice, every report, every submission
-              to the Ministry of Revenue — handled automatically. Focus on your business while
-              we handle the paperwork.
-            </p>
 
-            <div className="grid sm:grid-cols-2 gap-5">
-              {COMPLIANCE_FEATURES.map((f) => {
-                const Icon = f.icon;
+          {/* Left — content */}
+          <AnimatedSection direction="left">
+            <AnimatedItem>
+              <p className="section-label">Compliance</p>
+            </AnimatedItem>
+            <AnimatedItem>
+              <h2 className="mb-4">
+                Experience effortless MoR compliance with Meleket
+              </h2>
+            </AnimatedItem>
+            <AnimatedItem>
+              <p style={{ color: "#6B7280", marginBottom: "2rem" }}>
+                Stop worrying about tax compliance. Every invoice, every report, every
+                submission to the Ministry of Revenue — handled automatically.
+              </p>
+            </AnimatedItem>
+            <AnimatedSection className="grid sm:grid-cols-2 gap-4" stagger={0.06} direction="up">
+              {POINTS.map((p) => {
+                const Icon = p.icon;
                 return (
-                  <div key={f.title} className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ background: "#EEF2FF" }}>
-                      <Icon size={16} color="#1A3C8F" strokeWidth={1.8} />
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-bold mb-0.5" style={{ color: "#1A202C" }}>{f.title}</h3>
-                      <p className="text-[11px] leading-relaxed" style={{ color: "#718096" }}>{f.desc}</p>
-                    </div>
-                  </div>
+                  <AnimatedItem key={p.title}>
+                    <motion.div
+                      className="flex items-start gap-3 p-3 rounded-xl"
+                      style={{ background: "#ffffff", border: "1px solid #E5E7EB" }}
+                      whileHover={{ y: -2, boxShadow: "0 6px 20px rgba(0,0,0,0.07)" }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: "#EEF2FF" }}>
+                        <Icon size={15} color="#1A3C8F" strokeWidth={1.75} />
+                      </div>
+                      <div>
+                        <h4 style={{ fontSize: "0.8125rem", marginBottom: "2px" }}>{p.title}</h4>
+                        <p style={{ fontSize: "0.75rem", color: "#6B7280", lineHeight: 1.5 }}>{p.desc}</p>
+                      </div>
+                    </motion.div>
+                  </AnimatedItem>
                 );
               })}
-            </div>
-          </div>
+            </AnimatedSection>
+          </AnimatedSection>
 
-          {/* Right: Visual — compliance phone mockup */}
-          <div className="flex justify-center lg:justify-end">
-            <ComplianceMockup />
-          </div>
+          {/* Right — invoice mockup */}
+          <AnimatedSection direction="right">
+            <AnimatedItem>
+              <div className="flex justify-center lg:justify-end">
+                <InvoiceMockup />
+              </div>
+            </AnimatedItem>
+          </AnimatedSection>
         </div>
       </div>
     </section>
   );
 }
 
-function ComplianceMockup() {
+function InvoiceMockup() {
   return (
     <div className="relative">
-      {/* Shadow */}
-      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-44 h-6 rounded-full opacity-10"
-        style={{ background: "#1A3C8F", filter: "blur(16px)" }} />
-
-      <div className="relative w-60 md:w-64 rounded-[2.5rem] overflow-hidden"
-        style={{ border: "6px solid #1A202C", boxShadow: "0 16px 50px rgba(0,0,0,0.12)" }}>
-        <div className="bg-black flex justify-center pt-2 pb-1">
-          <div className="w-20 h-4 rounded-full" style={{ background: "#1A1A1A" }} />
-        </div>
-
-        <div className="bg-white px-3 pb-5 pt-2">
-          {/* Invoice header */}
-          <div className="text-center mb-3 pb-2" style={{ borderBottom: "1px solid #E2E8F0" }}>
-            <div className="w-8 h-8 rounded-lg mx-auto mb-1.5 flex items-center justify-center text-white text-xs font-black"
-              style={{ background: "#1A3C8F" }}>M</div>
-            <p className="text-[9px] font-bold" style={{ color: "#1A202C" }}>Kebede Trading</p>
-            <p className="text-[7px]" style={{ color: "#A0AEC0" }}>TIN: ET-12345678</p>
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="bg-white rounded-2xl overflow-hidden"
+        style={{ width: "280px", border: "1px solid #E5E7EB", boxShadow: "0 16px 50px rgba(0,0,0,0.1)" }}
+      >
+        {/* Invoice header */}
+        <div className="p-4" style={{ borderBottom: "1px solid #E5E7EB" }}>
+          <div className="flex justify-between items-start mb-3">
+            <div>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-black mb-1"
+                style={{ background: "#1A3C8F" }}>M</div>
+              <p style={{ fontSize: "11px", fontWeight: 700, color: "#111827" }}>Kebede Trading</p>
+              <p style={{ fontSize: "9px", color: "#9CA3AF" }}>TIN: ET-12345678</p>
+            </div>
+            <span style={{ fontSize: "10px", fontWeight: 700, padding: "2px 8px",
+              background: "#1A3C8F", color: "white", borderRadius: "4px" }}>INVOICE</span>
           </div>
-
-          {/* Invoice details */}
-          <div className="flex justify-between text-[7px] mb-2" style={{ color: "#718096" }}>
+          <div className="flex justify-between" style={{ fontSize: "9px", color: "#6B7280" }}>
             <span>INV-2024-0041</span>
             <span>13/07/2017 EC</span>
           </div>
+        </div>
 
-          {/* Items */}
-          <div className="rounded-lg p-2 mb-2" style={{ background: "#F7FAFC" }}>
-            <div className="flex justify-between text-[7px] font-bold mb-1" style={{ color: "#4A5568" }}>
-              <span>Item</span>
-              <span>Amount</span>
-            </div>
-            {[
-              { item: "Rice 25kg", amount: "ETB 2,400" },
-              { item: "Sugar 50kg", amount: "ETB 4,500" },
-              { item: "Cooking Oil 20L", amount: "ETB 1,800" },
-            ].map((row) => (
-              <div key={row.item} className="flex justify-between text-[7px] py-0.5" style={{ color: "#2D3748" }}>
-                <span>{row.item}</span>
-                <span>{row.amount}</span>
-              </div>
-            ))}
+        {/* Line items */}
+        <div className="p-4" style={{ borderBottom: "1px solid #E5E7EB" }}>
+          <div className="flex justify-between mb-2" style={{ fontSize: "8px", fontWeight: 600, color: "#9CA3AF" }}>
+            <span>ITEM</span><span>AMOUNT</span>
           </div>
+          {[["Rice 25kg","ETB 2,400"],["Sugar 50kg","ETB 4,500"],["Cooking Oil 20L","ETB 1,800"]].map(([item, amt]) => (
+            <div key={item} className="flex justify-between py-1" style={{ fontSize: "10px", borderBottom: "1px solid #F3F4F6" }}>
+              <span style={{ color: "#374151" }}>{item}</span>
+              <span style={{ fontWeight: 600, color: "#111827" }}>{amt}</span>
+            </div>
+          ))}
+        </div>
 
-          {/* Totals */}
-          <div className="text-[7px] space-y-0.5 mb-2 pb-2" style={{ borderBottom: "1px solid #E2E8F0" }}>
-            <div className="flex justify-between" style={{ color: "#718096" }}>
-              <span>Subtotal</span><span>ETB 8,700</span>
+        {/* Totals */}
+        <div className="p-4" style={{ borderBottom: "1px solid #E5E7EB" }}>
+          {[["Subtotal","ETB 8,700"],["VAT (15%)","ETB 1,305"]].map(([label, val]) => (
+            <div key={label} className="flex justify-between mb-1" style={{ fontSize: "10px", color: "#6B7280" }}>
+              <span>{label}</span><span>{val}</span>
             </div>
-            <div className="flex justify-between" style={{ color: "#718096" }}>
-              <span>VAT (15%)</span><span>ETB 1,305</span>
+          ))}
+          <div className="flex justify-between mt-2 pt-2" style={{ fontSize: "11px", fontWeight: 700,
+            borderTop: "1px solid #E5E7EB", color: "#111827" }}>
+            <span>Total</span><span>ETB 10,005</span>
+          </div>
+        </div>
+
+        {/* Compliance footer */}
+        <div className="p-4 flex items-end justify-between">
+          <div>
+            <div className="flex items-center gap-1 mb-1">
+              <span style={{ fontSize: "8px", fontWeight: 700, color: "#00C853" }}>✓ IRN: ET-2024-48291</span>
             </div>
-            <div className="flex justify-between font-bold pt-0.5" style={{ color: "#1A202C" }}>
-              <span>Total</span><span>ETB 10,005</span>
+            <div className="flex items-center gap-1">
+              <span style={{ fontSize: "8px", fontWeight: 700, color: "#00C853" }}>✓ Z-Report queued</span>
             </div>
           </div>
-
-          {/* IRN & QR */}
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-[6px] font-bold" style={{ color: "#00C853" }}>✓ IRN GENERATED</p>
-              <p className="text-[6px]" style={{ color: "#A0AEC0" }}>IRN-ET-2024-48291</p>
-              <p className="text-[6px] mt-1" style={{ color: "#00C853" }}>✓ Z-REPORT QUEUED</p>
-            </div>
-            {/* QR Code */}
-            <div className="w-10 h-10 rounded grid grid-cols-5 grid-rows-5 gap-[1px] p-[2px]" style={{ background: "white", border: "1px solid #E2E8F0" }}>
+          {/* QR code mockup */}
+          <div className="w-12 h-12 rounded grid p-1" style={{ border: "1px solid #E5E7EB" }}
+            >
+            <div className="w-full h-full grid grid-cols-5 gap-px">
               {Array.from({ length: 25 }).map((_, j) => (
-                <div key={j} className="rounded-[0.5px]"
-                  style={{ background: [0,1,2,4,5,6,8,10,12,14,16,18,20,22,23,24].includes(j) ? "#1A202C" : "white" }} />
+                <div key={j} className="rounded-[1px]"
+                  style={{ background: [0,1,2,4,5,6,8,10,14,16,18,20,22,24].includes(j)
+                    ? "#111827" : "transparent" }} />
               ))}
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Floating badge */}
-      <div className="absolute -right-4 top-20 px-3 py-2 rounded-xl text-[10px] font-bold"
-        style={{ background: "white", color: "#00C853", boxShadow: "0 4px 20px rgba(0,0,0,0.1)", border: "1px solid #E8FFF2" }}>
+      <motion.div
+        animate={{ y: [0, -5, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        className="absolute -right-5 top-8 bg-white rounded-xl px-3 py-2"
+        style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.1)", border: "1px solid #E5E7EB",
+          fontSize: "10px", fontWeight: 600, color: "#00C853" }}
+      >
         ✓ MoR Compliant
-      </div>
+      </motion.div>
     </div>
   );
 }

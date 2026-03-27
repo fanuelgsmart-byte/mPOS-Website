@@ -1,54 +1,65 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { FAQS } from "@/lib/constants";
+import { AnimatedSection, AnimatedItem } from "@/components/ui/AnimatedSection";
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="section-padding bg-white">
-      <div className="container-custom max-w-3xl">
-        <div className="text-center mb-12">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "#00C853" }}>
-            FAQ
-          </p>
-          <h2 className="text-3xl md:text-4xl font-extrabold" style={{ color: "#1A202C" }}>
-            Frequently asked questions
-          </h2>
-        </div>
+    <section className="section-padding" style={{ background: "#F3F4F6" }}>
+      <div className="container-custom max-w-2xl">
+        <AnimatedSection className="text-center mb-12">
+          <AnimatedItem><p className="section-label">FAQ</p></AnimatedItem>
+          <AnimatedItem><h2>Frequently asked questions</h2></AnimatedItem>
+        </AnimatedSection>
 
-        <div className="flex flex-col gap-2">
+        <AnimatedSection className="flex flex-col gap-2" stagger={0.06}>
           {FAQS.map((faq, i) => (
-            <div key={i} className="rounded-xl overflow-hidden" style={{ border: "1px solid #EDF2F7" }}>
-              <button
-                className="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
-                onClick={() => setOpen(open === i ? null : i)}
-              >
-                <span className="font-semibold text-sm pr-4" style={{ color: "#1A202C" }}>
-                  {faq.q}
-                </span>
-                <ChevronDown
-                  size={16}
-                  style={{
-                    color: "#A0AEC0",
-                    transform: open === i ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.2s ease",
-                    flexShrink: 0,
-                  }}
-                />
-              </button>
-              {open === i && (
-                <div className="px-4 pb-4">
-                  <p className="text-sm leading-relaxed" style={{ color: "#718096" }}>
-                    {faq.a}
-                  </p>
-                </div>
-              )}
-            </div>
+            <AnimatedItem key={i}>
+              <div className="bg-white rounded-xl overflow-hidden" style={{ border: "1px solid #E5E7EB" }}>
+                <button
+                  className="w-full flex items-center justify-between p-4 text-left"
+                  style={{ background: "transparent" }}
+                  onClick={() => setOpen(open === i ? null : i)}
+                >
+                  <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "#111827",
+                    paddingRight: "1rem" }}>
+                    {faq.q}
+                  </span>
+                  <motion.div
+                    animate={{ rotate: open === i ? 180 : 0 }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ flexShrink: 0 }}
+                  >
+                    <ChevronDown size={16} color="#9CA3AF" />
+                  </motion.div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {open === i && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ overflow: "hidden" }}
+                    >
+                      <p style={{ padding: "0 1rem 1rem", fontSize: "0.875rem",
+                        color: "#6B7280", lineHeight: 1.7 }}>
+                        {faq.a}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </AnimatedItem>
           ))}
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   );

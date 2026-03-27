@@ -1,19 +1,21 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Palette, Type, Image, Star } from "lucide-react";
+import { AnimatedSection, AnimatedItem } from "@/components/ui/AnimatedSection";
 
 const THEMES = [
-  { name: "Stylish", accent: "#1A3C8F", bg: "#EEF2FF" },
-  { name: "Luxury", accent: "#B8860B", bg: "#FFF8E0" },
-  { name: "Advanced", accent: "#00C853", bg: "#E8FFF2" },
-  { name: "Classic", accent: "#607D8B", bg: "#F0F4F8" },
+  { name: "Stylish",   accent: "#1A3C8F", bg: "#EEF2FF" },
+  { name: "Luxury",    accent: "#92400E", bg: "#FFFBEB" },
+  { name: "Advanced",  accent: "#00C853", bg: "#ECFDF5" },
+  { name: "Classic",   accent: "#374151", bg: "#F9FAFB" },
 ];
 
-const CUSTOMIZATIONS = [
-  { icon: Palette, title: "Custom Colors", desc: "Match your brand's primary color across all documents" },
-  { icon: Type, title: "Your Logo & Details", desc: "Business logo, name, TIN & address on every invoice" },
-  { icon: Image, title: "Multiple Themes", desc: "Choose from Stylish, Luxury, Advanced & Classic templates" },
-  { icon: Star, title: "Signature & Terms", desc: "Add authorized signatory and custom terms & conditions" },
+const POINTS = [
+  { icon: Palette, title: "Custom Colors",     desc: "Match your brand's color across all documents" },
+  { icon: Type,    title: "Logo & Details",    desc: "Business logo, name, TIN & address on every invoice" },
+  { icon: Image,   title: "Multiple Themes",   desc: "Choose from Stylish, Luxury, Advanced & Classic" },
+  { icon: Star,    title: "Signature & Terms", desc: "Authorized signatory and custom T&Cs on every doc" },
 ];
 
 export default function YourBillYourBrand() {
@@ -21,109 +23,89 @@ export default function YourBillYourBrand() {
     <section className="section-padding bg-white">
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Invoice previews */}
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              {THEMES.map((theme, i) => (
-                <div
-                  key={theme.name}
-                  className="rounded-xl overflow-hidden transition-transform duration-200 hover:-translate-y-1"
-                  style={{
-                    border: "1px solid #E2E8F0",
-                    boxShadow: i === 0 ? "0 8px 30px rgba(26,60,143,0.12)" : "0 2px 8px rgba(0,0,0,0.06)",
-                  }}
-                >
-                  {/* Invoice mockup */}
-                  <div className="p-3" style={{ background: theme.bg }}>
-                    {/* Header bar */}
-                    <div className="h-2 w-16 rounded-full mb-2" style={{ background: theme.accent }} />
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <div className="h-1.5 w-20 rounded-full mb-1" style={{ background: theme.accent, opacity: 0.6 }} />
-                        <div className="h-1 w-14 rounded-full" style={{ background: "#CBD5E0" }} />
-                      </div>
-                      <div className="text-[8px] font-bold px-1.5 py-0.5 rounded" style={{ background: theme.accent, color: "white" }}>
-                        INVOICE
-                      </div>
-                    </div>
 
-                    {/* Table mockup */}
-                    <div className="space-y-1 mb-3">
-                      <div className="h-1 rounded-full" style={{ background: theme.accent, opacity: 0.15 }} />
-                      <div className="flex gap-1">
-                        <div className="h-1 flex-[3] rounded-full" style={{ background: "#E2E8F0" }} />
-                        <div className="h-1 flex-1 rounded-full" style={{ background: "#E2E8F0" }} />
-                        <div className="h-1 flex-1 rounded-full" style={{ background: "#E2E8F0" }} />
+          {/* Left — invoice previews */}
+          <AnimatedSection direction="left">
+            <AnimatedItem>
+              <div className="grid grid-cols-2 gap-4">
+                {THEMES.map((theme, i) => (
+                  <motion.div
+                    key={theme.name}
+                    className="rounded-xl overflow-hidden cursor-pointer"
+                    style={{ border: "1px solid #E5E7EB", boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}
+                    whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(0,0,0,0.1)" }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    // @ts-expect-error framer-motion transition prop
+                    transition_={{ delay: i * 0.08, duration: 0.5 }}
+                  >
+                    <div className="p-3" style={{ background: theme.bg }}>
+                      <div className="h-2 w-14 rounded-full mb-2" style={{ background: theme.accent }} />
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <div className="h-1.5 w-16 rounded mb-1" style={{ background: theme.accent, opacity: 0.5 }} />
+                          <div className="h-1 w-10 rounded" style={{ background: "#D1D5DB" }} />
+                        </div>
+                        <span className="text-[7px] font-bold px-1.5 py-0.5 rounded"
+                          style={{ background: theme.accent, color: "white" }}>INVOICE</span>
                       </div>
-                      <div className="flex gap-1">
-                        <div className="h-1 flex-[3] rounded-full" style={{ background: "#E2E8F0" }} />
-                        <div className="h-1 flex-1 rounded-full" style={{ background: "#E2E8F0" }} />
-                        <div className="h-1 flex-1 rounded-full" style={{ background: "#E2E8F0" }} />
-                      </div>
-                      <div className="flex gap-1">
-                        <div className="h-1 flex-[3] rounded-full" style={{ background: "#E2E8F0" }} />
-                        <div className="h-1 flex-1 rounded-full" style={{ background: "#E2E8F0" }} />
-                        <div className="h-1 flex-1 rounded-full" style={{ background: "#E2E8F0" }} />
+                      {[1,2,3].map(r => (
+                        <div key={r} className="flex gap-1 mb-1">
+                          <div className="h-1 rounded flex-[3]" style={{ background: "#D1D5DB" }} />
+                          <div className="h-1 rounded flex-1" style={{ background: "#D1D5DB" }} />
+                          <div className="h-1 rounded flex-1" style={{ background: "#D1D5DB" }} />
+                        </div>
+                      ))}
+                      <div className="flex justify-between items-center mt-2 pt-2"
+                        style={{ borderTop: `1px solid ${theme.accent}30` }}>
+                        <div className="h-1 w-6 rounded" style={{ background: "#D1D5DB" }} />
+                        <div className="h-1.5 w-10 rounded" style={{ background: theme.accent }} />
                       </div>
                     </div>
-
-                    {/* Total */}
-                    <div className="flex justify-between items-center pt-2" style={{ borderTop: `1px solid ${theme.accent}30` }}>
-                      <div className="h-1 w-8 rounded-full" style={{ background: "#CBD5E0" }} />
-                      <div className="h-1.5 w-12 rounded-full" style={{ background: theme.accent }} />
+                    <div className="px-3 py-2 text-center bg-white">
+                      <p style={{ fontSize: "10px", fontWeight: 600, color: theme.accent }}>{theme.name}</p>
                     </div>
+                  </motion.div>
+                ))}
+              </div>
+            </AnimatedItem>
+          </AnimatedSection>
 
-                    {/* QR code mockup */}
-                    <div className="mt-2 flex justify-end">
-                      <div className="w-6 h-6 rounded grid grid-cols-3 grid-rows-3 gap-px p-px" style={{ background: "#E2E8F0" }}>
-                        {Array.from({ length: 9 }).map((_, j) => (
-                          <div key={j} className="rounded-[1px]" style={{ background: j % 2 === 0 ? "#4A5568" : "#E2E8F0" }} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Theme label */}
-                  <div className="px-3 py-2 text-center" style={{ background: "white" }}>
-                    <p className="text-[10px] font-semibold" style={{ color: theme.accent }}>{theme.name}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: Content */}
-          <div>
-            <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "#00C853" }}>
-              Customization
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold leading-tight mb-4" style={{ color: "#1A202C" }}>
-              Your bill, your brand
-            </h2>
-            <p className="text-base leading-relaxed mb-8" style={{ color: "#718096" }}>
-              Create professional invoices that represent your business. Choose from multiple
-              themes, add your logo, customize colors, and include your TIN for MoR compliance —
-              all with automatic IRN and QR code on every invoice.
-            </p>
-
-            <div className="flex flex-col gap-5">
-              {CUSTOMIZATIONS.map((c) => {
-                const Icon = c.icon;
+          {/* Right — content */}
+          <AnimatedSection direction="right">
+            <AnimatedItem>
+              <p className="section-label">Customization</p>
+            </AnimatedItem>
+            <AnimatedItem>
+              <h2 className="mb-4">Your bill, your brand</h2>
+            </AnimatedItem>
+            <AnimatedItem>
+              <p style={{ color: "#6B7280", marginBottom: "2rem" }}>
+                Create professional invoices that represent your business. Multiple themes, your logo,
+                custom colors, and TIN for MoR compliance — with automatic IRN and QR code on every invoice.
+              </p>
+            </AnimatedItem>
+            <AnimatedSection className="flex flex-col gap-4" stagger={0.07} direction="right">
+              {POINTS.map((p) => {
+                const Icon = p.icon;
                 return (
-                  <div key={c.title} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: "#EEF2FF" }}>
-                      <Icon size={18} color="#1A3C8F" strokeWidth={1.8} />
+                  <AnimatedItem key={p.title}>
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: "#EEF2FF" }}>
+                        <Icon size={16} color="#1A3C8F" strokeWidth={1.75} />
+                      </div>
+                      <div>
+                        <h4 style={{ marginBottom: "2px" }}>{p.title}</h4>
+                        <p style={{ fontSize: "0.8125rem", color: "#6B7280" }}>{p.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-sm font-bold mb-0.5" style={{ color: "#1A202C" }}>{c.title}</h3>
-                      <p className="text-xs" style={{ color: "#718096" }}>{c.desc}</p>
-                    </div>
-                  </div>
+                  </AnimatedItem>
                 );
               })}
-            </div>
-          </div>
+            </AnimatedSection>
+          </AnimatedSection>
         </div>
       </div>
     </section>
