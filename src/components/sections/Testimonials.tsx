@@ -1,81 +1,52 @@
+"use client";
+
 import { Star } from "lucide-react";
+import { motion } from "framer-motion";
 import { TESTIMONIALS } from "@/lib/constants";
+import { AnimatedSection, AnimatedItem } from "@/components/ui/AnimatedSection";
 
 export default function Testimonials() {
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding" style={{ background: "#F3F4F6" }}>
       <div className="container-custom">
-        <div className="text-center mb-16">
-          <span className="section-badge mb-4">Testimonials</span>
-          <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: "#0F2460" }}>
-            Loved by Ethiopian businesses
-          </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: "#4A5568" }}>
-            From Addis Ababa to Hawassa — real businesses, real results.
-          </p>
-        </div>
+        <AnimatedSection className="text-center mb-14">
+          <AnimatedItem><p className="section-label">Testimonials</p></AnimatedItem>
+          <AnimatedItem><h2>Trusted by Ethiopian businesses</h2></AnimatedItem>
+        </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <AnimatedSection className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto" stagger={0.1}>
           {TESTIMONIALS.map((t) => (
-            <div
-              key={t.name}
-              className="card"
-              style={{ borderLeft: "4px solid #1A3C8F" }}
-            >
-              {/* Stars */}
-              <div className="flex items-center gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} size={16} fill="#FFD600" color="#FFD600" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-sm leading-relaxed mb-6 italic" style={{ color: "#2D3748" }}>
-                &ldquo;{t.quote}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                  style={{
-                    background: `hsl(${t.avatar.charCodeAt(0) * 20}, 60%, 45%)`,
-                  }}
-                >
-                  {t.avatar}
+            <AnimatedItem key={t.name}>
+              <motion.div
+                className="card p-6"
+                whileHover={{ y: -3, boxShadow: "0 12px 32px rgba(0,0,0,0.09)" }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="flex gap-0.5 mb-3">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} size={14} fill="#F59E0B" color="#F59E0B" />
+                  ))}
                 </div>
-                <div>
-                  <p className="font-bold text-sm" style={{ color: "#0F2460" }}>{t.name}</p>
-                  <p className="text-xs" style={{ color: "#4A5568" }}>
-                    {t.business} · {t.city}
-                  </p>
+                <p style={{ fontSize: "0.9rem", color: "#374151", fontStyle: "italic",
+                  lineHeight: 1.65, marginBottom: "1.25rem" }}>
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                    style={{ background: `hsl(${t.avatar.charCodeAt(0) * 18}, 55%, 42%)` }}>
+                    {t.avatar}
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#111827" }}>{t.name}</p>
+                    <p style={{ fontSize: "0.75rem", color: "#9CA3AF" }}>
+                      {t.business} · {t.city}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatedItem>
           ))}
-        </div>
-
-        {/* Trust badges row */}
-        <div className="mt-12 flex flex-wrap justify-center items-center gap-6">
-          {[
-            { label: "4.8 / 5", sublabel: "Google Play Rating", icon: "⭐" },
-            { label: "5,000+", sublabel: "Active Businesses", icon: "🏪" },
-            { label: "MoR Certified", sublabel: "e-Invoice Ready", icon: "✅" },
-            { label: "INSA Compliant", sublabel: "Security Standards", icon: "🔒" },
-          ].map((badge) => (
-            <div
-              key={badge.label}
-              className="flex items-center gap-3 px-5 py-3 rounded-xl"
-              style={{ background: "#F8F9FF", border: "1px solid #EEF2FF" }}
-            >
-              <span className="text-2xl">{badge.icon}</span>
-              <div>
-                <p className="font-black text-sm" style={{ color: "#0F2460" }}>{badge.label}</p>
-                <p className="text-xs" style={{ color: "#94A3B8" }}>{badge.sublabel}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   );

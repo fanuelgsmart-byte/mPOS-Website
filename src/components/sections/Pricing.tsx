@@ -1,141 +1,99 @@
 "use client";
 
 import { Check } from "lucide-react";
+import { motion } from "framer-motion";
 import { PRICING_PLANS } from "@/lib/constants";
-import Link from "next/link";
+import { AnimatedSection, AnimatedItem } from "@/components/ui/AnimatedSection";
+import Button from "@/components/ui/Button";
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="section-padding" style={{ background: "#F8F9FF" }}>
+    <section id="pricing" className="section-padding bg-white">
       <div className="container-custom">
-        <div className="text-center mb-16">
-          <span className="section-badge mb-4">Pricing</span>
-          <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: "#0F2460" }}>
-            Simple, transparent pricing in ETB
-          </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: "#4A5568" }}>
-            Start free. Upgrade when you&apos;re ready. No hidden fees. No surprises.
-          </p>
-        </div>
+        <AnimatedSection className="text-center mb-14">
+          <AnimatedItem><p className="section-label">Pricing</p></AnimatedItem>
+          <AnimatedItem><h2>Simple, transparent pricing in ETB</h2></AnimatedItem>
+          <AnimatedItem>
+            <p style={{ marginTop: "0.5rem", color: "#6B7280" }}>
+              Start free. Upgrade when you&apos;re ready. No hidden fees.
+            </p>
+          </AnimatedItem>
+        </AnimatedSection>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <AnimatedSection className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto" stagger={0.1}>
           {PRICING_PLANS.map((plan) => (
-            <div
-              key={plan.name}
-              className="rounded-2xl p-8 relative flex flex-col"
-              style={
-                plan.highlight
-                  ? {
-                      background: "linear-gradient(135deg, #1A3C8F, #2952B3)",
-                      color: "white",
-                      transform: "scale(1.05)",
-                      boxShadow: "0 20px 60px rgba(26,60,143,0.3)",
-                    }
-                  : {
-                      background: "white",
-                      border: "1px solid #EEF2FF",
-                      boxShadow: "0 4px 24px rgba(26,60,143,0.06)",
-                    }
-              }
-            >
-              {plan.highlight && (
-                <div
-                  className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-xs font-bold"
-                  style={{ background: "#00C853", color: "white" }}
-                >
-                  Most Popular
-                </div>
-              )}
+            <AnimatedItem key={plan.name}>
+              <motion.div
+                className={plan.highlight ? "" : "card"}
+                style={plan.highlight
+                  ? { background: "#1A3C8F", borderRadius: "12px", padding: "1.75rem",
+                      boxShadow: "0 16px 40px rgba(26,60,143,0.22)", position: "relative" }
+                  : { padding: "1.75rem", position: "relative" }
+                }
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {plan.highlight && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[11px] font-bold text-white px-3 py-1 rounded-full"
+                    style={{ background: "#00C853" }}>
+                    Most Popular
+                  </span>
+                )}
 
-              <div className="mb-6">
-                <h3
-                  className="text-xl font-black mb-1"
-                  style={{ color: plan.highlight ? "white" : "#0F2460" }}
-                >
+                <h3 style={{ fontSize: "1.125rem", marginBottom: "0.25rem",
+                  color: plan.highlight ? "#ffffff" : "#111827" }}>
                   {plan.name}
                 </h3>
-                <p
-                  className="text-sm mb-4"
-                  style={{ color: plan.highlight ? "rgba(255,255,255,0.7)" : "#94A3B8" }}
-                >
+                <p style={{ fontSize: "0.8125rem", marginBottom: "1rem",
+                  color: plan.highlight ? "rgba(255,255,255,0.6)" : "#9CA3AF" }}>
                   {plan.description}
                 </p>
-                <div className="flex items-end gap-1">
-                  <span
-                    className="text-4xl font-black"
-                    style={{ color: plan.highlight ? "white" : "#0F2460" }}
-                  >
+
+                <div className="mb-6">
+                  <span style={{ fontSize: "2rem", fontWeight: 700, letterSpacing: "-0.02em",
+                    color: plan.highlight ? "#ffffff" : "#111827" }}>
                     {plan.price === "0" ? "Free" : `ETB ${plan.price}`}
                   </span>
                   {plan.price !== "0" && (
-                    <span
-                      className="text-sm mb-1"
-                      style={{ color: plan.highlight ? "rgba(255,255,255,0.6)" : "#94A3B8" }}
-                    >
-                      / {plan.period}
+                    <span style={{ fontSize: "0.8125rem", marginLeft: "4px",
+                      color: plan.highlight ? "rgba(255,255,255,0.5)" : "#9CA3AF" }}>
+                      /{plan.period}
                     </span>
                   )}
                 </div>
-              </div>
 
-              <ul className="flex flex-col gap-3 mb-8 flex-1">
-                {plan.features.map((feat) => (
-                  <li key={feat} className="flex items-start gap-2.5 text-sm">
-                    <span
-                      className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                      style={
-                        plan.highlight
-                          ? { background: "rgba(0,200,83,0.2)", color: "#00C853" }
-                          : { background: "#E8FFF2", color: "#00C853" }
-                      }
-                    >
-                      <Check size={12} />
-                    </span>
-                    <span style={{ color: plan.highlight ? "rgba(255,255,255,0.85)" : "#2D3748" }}>
-                      {feat}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                <ul className="flex flex-col gap-2.5 mb-6">
+                  {plan.features.map((feat) => (
+                    <li key={feat} className="flex items-start gap-2" style={{ fontSize: "0.8125rem" }}>
+                      <Check size={14} color={plan.highlight ? "#00C853" : "#00C853"}
+                        strokeWidth={2.5} style={{ flexShrink: 0, marginTop: "2px" }} />
+                      <span style={{ color: plan.highlight ? "rgba(255,255,255,0.82)" : "#374151" }}>
+                        {feat}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
 
-              <Link
-                href="#download"
-                className="block text-center py-3 rounded-xl font-semibold text-sm transition-all duration-200"
-                style={
-                  plan.highlight
-                    ? {
-                        background: "#00C853",
-                        color: "white",
-                      }
-                    : {
-                        background: "#EEF2FF",
-                        color: "#1A3C8F",
-                      }
-                }
-                onMouseEnter={(e) => {
-                  if (plan.highlight) {
-                    (e.currentTarget as HTMLAnchorElement).style.background = "#00A846";
-                  } else {
-                    (e.currentTarget as HTMLAnchorElement).style.background = "#D8E0FF";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (plan.highlight) {
-                    (e.currentTarget as HTMLAnchorElement).style.background = "#00C853";
-                  } else {
-                    (e.currentTarget as HTMLAnchorElement).style.background = "#EEF2FF";
-                  }
-                }}
-              >
-                {plan.cta}
-              </Link>
-            </div>
+                <Button
+                  href="#download"
+                  variant={plan.highlight ? "primary" : "secondary"}
+                  className="w-full justify-center"
+                  style={{ fontSize: "0.875rem" }}
+                >
+                  {plan.cta}
+                </Button>
+              </motion.div>
+            </AnimatedItem>
           ))}
-        </div>
+        </AnimatedSection>
 
-        <p className="text-center text-sm mt-8" style={{ color: "#94A3B8" }}>
-          All plans include MoR e-Invoicing, ETB currency, Ethiopian Calendar, and Amharic + English support.
-        </p>
+        <AnimatedSection className="text-center mt-8">
+          <AnimatedItem>
+            <p style={{ fontSize: "0.8125rem", color: "#9CA3AF" }}>
+              All plans include MoR e-Invoicing, ETB, Ethiopian Calendar, and Amharic + English.
+            </p>
+          </AnimatedItem>
+        </AnimatedSection>
       </div>
     </section>
   );
