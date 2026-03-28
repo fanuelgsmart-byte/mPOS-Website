@@ -12,7 +12,6 @@ export default function EffortlessCompliance() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const tab = COMPLIANCE_TABS[activeTab];
-  const TabIcon = TAB_ICONS[activeTab];
 
   return (
     <section id="compliance" ref={ref} className="section-padding" style={{ background: "#F9FAFB" }}>
@@ -22,114 +21,96 @@ export default function EffortlessCompliance() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <p className="section-label">Compliance</p>
-          <h2>Experience Effortless Compliance</h2>
-          <p className="mt-3 text-gray-500 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            Experience Effortless Compliance
+          </h2>
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-base">
             Stop worrying about tax compliance. Every invoice, every report,
             every submission — handled automatically.
           </p>
         </motion.div>
 
-        {/* Tab Navigation with Icons - MyBillBook Style */}
+        {/* Main Layout: Vertical tabs on left, content on right */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, delay: 0.15 }}
-          className="flex justify-center gap-4 mb-12 flex-wrap"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="grid lg:grid-cols-5 gap-8 max-w-6xl mx-auto"
         >
-          {COMPLIANCE_TABS.map((t, i) => {
-            const Icon = TAB_ICONS[i];
-            return (
-              <button
-                key={t.id}
-                onClick={() => setActiveTab(i)}
-                className="flex flex-col items-center gap-2 px-6 py-4 rounded-lg transition-all"
-                style={{
-                  background: activeTab === i ? "#FFFFFF" : "transparent",
-                  border: activeTab === i ? "1px solid #E5E7EB" : "1px solid transparent",
-                  boxShadow: activeTab === i ? "0 4px 12px rgba(0,0,0,0.08)" : "none",
-                }}
-              >
-                <Icon
-                  size={28}
-                  style={{ color: activeTab === i ? "#22C55E" : "#9CA3AF" }}
-                />
-                <span
-                  className="text-sm font-medium text-center whitespace-normal max-w-[120px]"
-                  style={{ color: activeTab === i ? "#22C55E" : "#6B7280" }}
+          {/* Left Column - Vertical Tab Navigation */}
+          <div className="lg:col-span-1 flex flex-col gap-3">
+            {COMPLIANCE_TABS.map((t, i) => {
+              const Icon = TAB_ICONS[i];
+              return (
+                <motion.button
+                  key={t.id}
+                  onClick={() => setActiveTab(i)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left"
+                  style={{
+                    background: activeTab === i ? "#F3E8FF" : "transparent",
+                    border: activeTab === i ? "1px solid #E9D5FF" : "1px solid transparent",
+                  }}
+                  whileHover={{ x: 4 }}
                 >
-                  {t.label}
-                </span>
-              </button>
-            );
-          })}
-        </motion.div>
+                  <Icon
+                    size={24}
+                    style={{
+                      color: activeTab === i ? "#6366F1" : "#9CA3AF",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <span
+                    className="text-sm font-medium"
+                    style={{
+                      color: activeTab === i ? "#4F46E5" : "#6B7280",
+                    }}
+                  >
+                    {t.label}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
 
-        {/* Tab Content - Image left, text right (MyBillBook Layout) */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tab.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto"
-          >
-            {/* Left - Placeholder Image */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4 }}
-              className="flex justify-center lg:justify-start"
-            >
-              <ComplianceImage tabIndex={activeTab} />
-            </motion.div>
-
-            {/* Right - Text Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{tab.title}</h3>
-              <p className="text-gray-600 mb-6 leading-relaxed text-base">{tab.description}</p>
-
-              {/* Features List */}
-              <div className="mb-8 space-y-3">
-                {tab.features.map((feat) => (
-                  <div key={feat} className="flex items-start gap-3">
-                    <span
-                      className="mt-1 flex-shrink-0"
-                      style={{
-                        color: "#22C55E",
-                        fontSize: "18px",
-                      }}
-                    >
-                      ✓
-                    </span>
-                    <span className="text-sm text-gray-700">{feat}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA Button */}
-              <button
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:gap-3"
-                style={{
-                  background: "#22C55E",
-                  color: "#FFFFFF",
-                }}
+          {/* Right Column - Tab Content (image, description, button) */}
+          <div className="lg:col-span-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={tab.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-xl overflow-hidden border border-gray-200"
               >
-                Get Started Now
-                <ArrowRight size={18} />
-              </button>
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+                {/* Feature Image */}
+                <div className="relative w-full" style={{ minHeight: "300px" }}>
+                  <ComplianceImage tabIndex={activeTab} />
+                </div>
+
+                {/* Description and Button */}
+                <div className="p-8">
+                  <p className="text-gray-700 mb-6 leading-relaxed text-base">
+                    {tab.description}
+                  </p>
+
+                  <button
+                    className="inline-flex items-center gap-2 px-8 py-3 rounded-full text-sm font-semibold transition-all hover:gap-3"
+                    style={{
+                      background: "#4F46E5",
+                      color: "#FFFFFF",
+                    }}
+                  >
+                    Get Started Now
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -146,37 +127,28 @@ function ComplianceImage({ tabIndex }: { tabIndex: number }) {
 
   return (
     <motion.div
-      animate={{ y: [0, -8, 0] }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      className="rounded-xl overflow-hidden"
-      style={{
-        width: "100%",
-        maxWidth: "400px",
-        height: "400px",
-        background: "linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "1px solid #E5E7EB",
-      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="w-full h-full relative bg-gray-100 flex items-center justify-center"
+      style={{ minHeight: "300px" }}
     >
       <img
         src={`/static-assets/images/landing-page-v2/${imageName}-compliance.webp`}
         alt={`${imageName} compliance feature`}
         className="w-full h-full object-cover"
         onError={(e) => {
-          // Fallback: show placeholder if image doesn't exist
           const target = e.target as HTMLImageElement;
           target.style.display = "none";
         }}
       />
-      {/* Placeholder text when image fails to load */}
-      <div
-        className="absolute text-center text-gray-500"
-        style={{ pointerEvents: "none" }}
-      >
-        <div className="text-4xl mb-2">📋</div>
-        <div className="text-sm font-medium">{imageName.toUpperCase()} Compliance</div>
+      {/* Fallback placeholder */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+        <div className="text-5xl mb-3">📋</div>
+        <div className="text-sm font-medium text-gray-600">
+          {imageName.toUpperCase()} Compliance
+        </div>
       </div>
     </motion.div>
   );
