@@ -202,8 +202,8 @@ export default function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="w-full lg:w-[55%] relative flex items-end justify-center lg:justify-end"
-          style={{ marginRight: "-5vw" }}
+          className="w-full lg:w-[55%] relative flex items-end justify-end"
+          style={{ marginRight: "calc(-1 * (100vw - 100%) / 2)", paddingRight: 0 }}
         >
           <Image
             src="/hero-mockup.svg"
@@ -212,7 +212,7 @@ export default function Hero() {
             height={900}
             priority
             className="w-full h-auto object-contain"
-            style={{ marginBottom: "-4px", maxWidth: "820px" }}
+            style={{ marginBottom: "-4px", maxWidth: "860px", marginRight: "-40px" }}
           />
         </motion.div>
       </div>
