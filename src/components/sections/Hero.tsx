@@ -28,24 +28,24 @@ export default function Hero() {
           animate={inView ? "show" : "hidden"}
           className="w-full lg:w-[48%] py-12 lg:py-20 z-10"
         >
-          {/* Elevated accent — "(even more)" above title */}
-          <motion.div variants={fadeUp} className="mb-2">
+          {/* Main title + elevated accent together */}
+          <motion.div variants={fadeUp} style={{ position: "relative", display: "inline-block" }}>
+            {/* "(even more)" floats above the ^ — positioned relative to the h1 */}
             <span
               style={{
                 fontFamily: "'Dancing Script', cursive",
-                fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
+                fontSize: "clamp(1.25rem, 2vw, 1.75rem)",
                 color: "#E53935",
                 fontWeight: 600,
-                display: "inline-block",
-                marginLeft: "clamp(10rem, 22vw, 16rem)",
+                position: "absolute",
+                /* sits above the ^ which comes after "Business made " */
+                left: "calc(100% * 0.62)",
+                top: "-1.6rem",
+                whiteSpace: "nowrap",
               }}
             >
               (even more)
             </span>
-          </motion.div>
-
-          {/* Main title */}
-          <motion.div variants={fadeUp}>
             <h1
               style={{
                 fontSize: "clamp(2.5rem, 5vw, 4rem)",
@@ -202,7 +202,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="w-full lg:w-[52%] relative flex items-end justify-center lg:justify-end"
+          className="w-full lg:w-[52%] relative flex items-end justify-center lg:justify-end lg:-mr-8 xl:-mr-16"
         >
           <Image
             src="/hero-mockup.svg"
@@ -210,7 +210,7 @@ export default function Hero() {
             width={750}
             height={750}
             priority
-            className="w-full max-w-[650px] h-auto object-contain"
+            className="w-full h-auto object-contain"
             style={{ marginBottom: "-4px" }}
           />
         </motion.div>
