@@ -202,16 +202,17 @@ export default function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="w-full lg:w-[52%] relative flex items-end justify-center lg:justify-end lg:-mr-8 xl:-mr-16"
+          className="w-full lg:w-[55%] relative flex items-end justify-center lg:justify-end"
+          style={{ marginRight: "-5vw" }}
         >
           <Image
             src="/hero-mockup.svg"
             alt="Meleket app dashboard and mobile interface"
-            width={750}
-            height={750}
+            width={900}
+            height={900}
             priority
             className="w-full h-auto object-contain"
-            style={{ marginBottom: "-4px" }}
+            style={{ marginBottom: "-4px", maxWidth: "820px" }}
           />
         </motion.div>
       </div>
