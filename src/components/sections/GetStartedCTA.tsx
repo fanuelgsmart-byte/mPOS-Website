@@ -160,20 +160,21 @@ export default function GetStartedCTA() {
               </div>
             </div>
 
-            {/* CENTER — Phone Mockup */}
+            {/* CENTER — Phone Mockup (hand holding phone) */}
             <div
               className="w-full lg:w-[30%] relative flex items-end justify-center"
-              style={{ minHeight: "300px" }}
+              style={{ minHeight: "300px", alignSelf: "flex-end" }}
             >
               <Image
-                src="/hero-mockup.png"
-                alt="Meleket app on phone"
-                width={320}
-                height={420}
+                src="/hand-phone-mockup.png"
+                alt="Hand holding phone showing Meleket app"
+                width={400}
+                height={540}
                 className="object-contain"
                 style={{
-                  maxHeight: "420px",
+                  maxHeight: "480px",
                   width: "auto",
+                  marginBottom: "-4px",
                 }}
               />
             </div>
