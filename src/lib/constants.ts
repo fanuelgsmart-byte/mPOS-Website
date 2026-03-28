@@ -56,6 +56,97 @@ export const FEATURES = [
   },
 ];
 
+export const FEATURE_TABS = [
+  {
+    id: "pos",
+    icon: "ShoppingCart",
+    title: "POS Billing & Counter Sales",
+    color: "#E53935",
+    content:
+      "Using Meleket's POS billing software, you can process counter sales in seconds with barcode scanning and thermal printing. The intuitive interface lets your staff ring up transactions quickly, apply discounts, and accept multiple payment methods including Telebirr and CBE Birr.\nMeleket billing software for small businesses provides a professional checkout experience with instant receipt generation. The app helps automate most billing processes, making transactions error-free. Additionally, you can set up quick-access product shortcuts for your best-selling items.\nFurther, you can switch between retail and wholesale pricing anytime. All you need is the Meleket POS software and it's done in a few taps. Meleket offers a complete option for quickly processing sales, reducing wait times, and improving customer satisfaction.",
+  },
+  {
+    id: "invoicing",
+    icon: "FileText",
+    title: "MoR e-Invoicing & IRN",
+    color: "#E53935",
+    content:
+      "Generate Ministry of Revenue compliant e-invoices with automatic IRN (Invoice Reference Number) and QR code on every transaction. Meleket handles the entire compliance workflow — from invoice creation to daily Z-Report transmission — completely automatically.\nEvery sales invoice you create is validated in real-time against MoR requirements. The system generates the required QR code, attaches the IRN, and formats everything according to Ethiopian tax regulations. You can send invoices directly through SMS, email, or print them.\nThe daily Z-Report is compiled and transmitted to the Ministry of Revenue at the end of each business day without any manual intervention. This means you stay compliant effortlessly while focusing on running your business.",
+  },
+  {
+    id: "inventory",
+    icon: "Package",
+    title: "Inventory & Stock Management",
+    color: "#E53935",
+    content:
+      "Manage stock across multiple warehouses with FIFO and LIFO costing methods. Meleket tracks every item from purchase to sale, giving you real-time visibility into stock levels, reorder points, and inventory valuation.\nSet up automatic low-stock alerts so you never run out of your best-selling products. The system tracks batch numbers, expiry dates, and serial numbers for complete traceability. You can transfer stock between locations in seconds.\nGenerate inventory reports including stock summary, ageing analysis, and movement reports. With barcode label printing built in, you can label and track every item in your warehouse efficiently.",
+  },
+  {
+    id: "themes",
+    icon: "Palette",
+    title: "Choose The Best Invoice Themes",
+    color: "#E53935",
+    content:
+      "Customize your business documents with professionally designed invoice templates. Choose from thermal receipt formats, A4 full-page invoices, and A5 compact layouts — each available in multiple themes including Classic, Modern, Luxury, and Stylish designs.\nEvery template is fully customizable with your business logo, colors, and layout preferences. You can preview how your invoices will look before printing and switch between themes anytime without losing your data.\nWhether you need a simple thermal receipt for quick counter sales or a detailed A4 invoice for wholesale transactions, Meleket has the perfect template to make your business look professional.",
+  },
+  {
+    id: "expenses",
+    icon: "Receipt",
+    title: "Record Business Expenses",
+    color: "#E53935",
+    content:
+      "Track every business expense with categorized entries and receipt attachments. From rent and utilities to supplier payments and operational costs, Meleket gives you complete visibility into where your money goes.\nCreate expense categories that match your business needs and assign expenses to specific departments or projects. The system automatically calculates totals and generates expense reports for any date range.\nLink expenses to specific suppliers or vendors for easy reconciliation. With Meleket's expense tracking, you can identify cost-saving opportunities and make informed financial decisions for your business.",
+  },
+  {
+    id: "receivables",
+    icon: "ArrowLeftRight",
+    title: "Accounts Receivable & Payables",
+    color: "#E53935",
+    content:
+      "Keep track of every birr owed to you and every birr you owe. Meleket's ledger management shows you a clear picture of receivables and payables with customer and supplier-wise breakdowns.\nSend payment reminders to customers via SMS with a single tap. Set due dates on invoices and the system automatically flags overdue payments. You can view ageing reports to prioritize collections.\nFor payables, track supplier credit terms and upcoming payment deadlines. The system alerts you before due dates so you never miss a payment and maintain good supplier relationships.",
+  },
+  {
+    id: "reports",
+    icon: "BarChart2",
+    title: "Create 40+ Business Reports",
+    color: "#E53935",
+    content:
+      "Generate comprehensive business reports covering sales, purchases, inventory, expenses, taxes, and profitability. With 40+ report templates, you have all the data you need to make smart business decisions.\nReports include daily sales summary, profit & loss statements, tax reports for VAT and TOT, stock valuation, customer-wise sales analysis, and much more. Every report can be filtered by date range, category, or custom parameters.\nExport any report to PDF or Excel format for sharing with accountants, partners, or tax authorities. Schedule automatic report generation to receive key business metrics every morning.",
+  },
+  {
+    id: "backup",
+    icon: "CloudUpload",
+    title: "Automatic Data Backup",
+    color: "#E53935",
+    content:
+      "Your business data is automatically backed up to the cloud, ensuring you never lose a single transaction record. Meleket's backup system runs continuously in the background without affecting your workflow.\nEven when working offline, all your data is stored locally and synced to the cloud as soon as connectivity is restored. The system maintains multiple backup versions so you can recover data from any point in time.\nMeet INSA (Information Network Security Administration) compliance requirements with enterprise-grade encryption for all stored and transmitted data. Your business information is protected with the highest security standards.",
+  },
+  {
+    id: "printer",
+    icon: "Printer",
+    title: "Laser & Thermal Printer Support",
+    color: "#E53935",
+    content:
+      "Meleket works with all major printer types — thermal receipt printers for quick counter sales, laser and inkjet printers for detailed A4 invoices, and even mobile Bluetooth printers for on-the-go billing.\nConfigure multiple printers for different purposes: a thermal printer at the counter for receipts, an A4 printer in the back office for formal invoices, and a label printer for inventory barcodes. Switch between them with a single click.\nThe system automatically optimizes print layouts for each printer type, ensuring your documents always look professional regardless of the output device.",
+  },
+  {
+    id: "payroll",
+    icon: "Users",
+    title: "Staff & Payroll Management",
+    color: "#E53935",
+    content:
+      "Manage your entire workforce from attendance tracking to salary disbursement. Meleket's payroll module handles employee records, attendance marking, leave management, and automatic salary calculation.\nDefine salary structures with basic pay, allowances, and deductions. The system calculates net salary, generates pay slips, and maintains a complete payroll history for each employee. Support for both monthly and bi-weekly pay cycles.\nSet role-based access controls so each staff member only sees what they need. Track daily attendance, manage shift schedules, and generate workforce reports to optimize your staffing levels.",
+  },
+  {
+    id: "multilang",
+    icon: "Globe",
+    title: "Amharic & English Interface",
+    color: "#E53935",
+    content:
+      "Switch between Amharic and English at any time — the entire interface, including invoices, reports, and receipts, adapts to your language preference. Meleket is built specifically for Ethiopian businesses who need bilingual support.\nCustomers receive invoices in their preferred language while you manage the system in yours. All standard business terms, tax labels, and compliance text are properly translated and formatted.\nThe Ethiopian Calendar is fully supported alongside the Gregorian calendar, so you can view dates, generate reports, and set reminders in whichever calendar system you prefer.",
+  },
+];
+
 export const MORE_FEATURES = [
   "Multi-warehouse support",
   "Barcode label printing",
