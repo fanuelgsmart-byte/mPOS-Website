@@ -15,18 +15,18 @@ export default function Hero() {
       className="relative overflow-hidden"
       style={{
         minHeight: "calc(100vh - 72px)",
-        background: "#FFF0EE",
+        background: "#FFF5F3",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <div className="container-custom flex flex-col lg:flex-row items-center flex-1 relative">
+      <div className="container-custom flex flex-col lg:flex-row items-center flex-1 relative gap-8 lg:gap-0">
         {/* LEFT — Text content */}
         <motion.div
           variants={staggerContainer(0.12)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="w-full lg:w-[48%] py-12 lg:py-20 z-10"
+          className="w-full lg:w-1/2 py-10 lg:py-16 z-10"
         >
           {/* Main title + elevated accent together */}
           <motion.div variants={fadeUp} style={{ position: "relative", display: "inline-block" }}>
@@ -34,13 +34,12 @@ export default function Hero() {
             <span
               style={{
                 fontFamily: "'Dancing Script', cursive",
-                fontSize: "clamp(1.25rem, 2vw, 1.75rem)",
+                fontSize: "clamp(1.125rem, 2.5vw, 1.75rem)",
                 color: "#E53935",
                 fontWeight: 600,
                 position: "absolute",
-                /* sits above the ^ which comes after "Business made " */
-                left: "calc(100% * 0.62)",
-                top: "-1.6rem",
+                left: "calc(100% * 0.58)",
+                top: "-1.5rem",
                 whiteSpace: "nowrap",
               }}
             >
@@ -48,14 +47,14 @@ export default function Hero() {
             </span>
             <h1
               style={{
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
+                fontSize: "clamp(2.75rem, 6vw, 4.25rem)",
+                fontWeight: 900,
+                lineHeight: 1.1,
                 color: "#111827",
                 letterSpacing: "-0.02em",
               }}
             >
-              Business made
+              Business
               <span style={{ position: "relative" }}>
                 {" "}
                 <span style={{ color: "#E53935", fontSize: "0.5em", verticalAlign: "super" }}>^</span>
@@ -71,9 +70,10 @@ export default function Hero() {
             style={{
               fontSize: "clamp(1.125rem, 2vw, 1.5rem)",
               color: "#6B7280",
-              marginTop: "0.75rem",
-              marginBottom: "2.5rem",
+              marginTop: "1rem",
+              marginBottom: "3rem",
               fontWeight: 400,
+              lineHeight: 1.4,
             }}
           >
             with Meleket on Desktop
@@ -82,29 +82,30 @@ export default function Hero() {
           {/* Phone number form */}
           <motion.form
             variants={fadeUp}
-            className="flex flex-col sm:flex-row gap-3 mb-10"
+            className="flex flex-col sm:flex-row gap-3 mb-12"
             onSubmit={(e) => e.preventDefault()}
           >
             <div
               className="flex"
               style={{
-                border: "1px solid #D6D6D6",
-                borderRadius: "8px",
+                border: "1px solid #E5E7EB",
+                borderRadius: "10px",
                 overflow: "hidden",
                 background: "#FFFFFF",
-                maxWidth: "400px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+                maxWidth: "420px",
               }}
             >
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  padding: "0.75rem 1rem",
-                  borderRight: "1px solid #D6D6D6",
+                  padding: "0.875rem 1.25rem",
+                  borderRight: "1px solid #E5E7EB",
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontSize: "18px", color: "#374151", fontWeight: 500 }}>+251</span>
+                <span style={{ fontSize: "16px", color: "#374151", fontWeight: 600 }}>+251</span>
               </div>
               <input
                 type="tel"
@@ -115,8 +116,8 @@ export default function Hero() {
                   border: "none",
                   outline: "none",
                   fontSize: "1rem",
-                  color: "#374151",
-                  padding: "0.875rem 1rem",
+                  color: "#111827",
+                  padding: "0.875rem 1.25rem",
                   minWidth: 0,
                   background: "transparent",
                 }}
@@ -130,14 +131,23 @@ export default function Hero() {
                 fontWeight: 700,
                 fontSize: "1rem",
                 border: "none",
-                borderRadius: "8px",
+                borderRadius: "10px",
                 cursor: "pointer",
-                padding: "0.875rem 2.5rem",
+                padding: "0.875rem 2.75rem",
                 whiteSpace: "nowrap",
-                transition: "background 150ms ease",
+                transition: "all 150ms ease",
+                boxShadow: "0 2px 8px rgba(229,57,53,0.25)",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#C62828")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#E53935")}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#C62828";
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(229,57,53,0.35)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#E53935";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(229,57,53,0.25)";
+              }}
             >
               Get Started
             </button>
@@ -148,33 +158,34 @@ export default function Hero() {
             variants={fadeUp}
             style={{
               background: "#FFFFFF",
-              borderRadius: "12px",
-              padding: "1.5rem 2rem",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+              borderRadius: "16px",
+              padding: "2rem 2.5rem",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
             }}
           >
             <p
               style={{
-                fontSize: "1.125rem",
+                fontSize: "clamp(1rem, 2vw, 1.25rem)",
                 fontWeight: 700,
                 color: "#111827",
-                marginBottom: "1rem",
+                marginBottom: "1.5rem",
               }}
             >
               One platform for all your business needs
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
               {[
                 "Manage Digital\nBusiness Ledger",
                 "Send Payment Reminders for\neasy collection",
               ].map((text, i) => (
-                <div key={i} className="flex items-center gap-5">
+                <div key={i} className="flex items-start gap-6">
                   <span
                     style={{
-                      fontSize: "0.875rem",
+                      fontSize: "0.9375rem",
                       color: "#6B7280",
-                      lineHeight: 1.5,
+                      lineHeight: 1.6,
                       whiteSpace: "pre-line",
+                      fontWeight: 500,
                     }}
                   >
                     {text}
@@ -183,10 +194,10 @@ export default function Hero() {
                     <div
                       className="hidden sm:block"
                       style={{
-                        width: "3px",
-                        height: "36px",
+                        width: "2px",
+                        height: "48px",
                         background: "#E53935",
-                        borderRadius: "2px",
+                        borderRadius: "1px",
                         flexShrink: 0,
                       }}
                     />
@@ -202,8 +213,8 @@ export default function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="w-full lg:w-[55%] relative flex items-end justify-end"
-          style={{ marginRight: "calc(-1 * (100vw - 100%) / 2)", paddingRight: 0 }}
+          className="w-full lg:w-1/2 relative flex items-center justify-end"
+          style={{ paddingRight: 0 }}
         >
           <Image
             src="/hero-mockup.svg"
@@ -212,7 +223,7 @@ export default function Hero() {
             height={900}
             priority
             className="w-full h-auto object-contain"
-            style={{ marginBottom: "-4px", maxWidth: "860px", marginRight: "-40px" }}
+            style={{ maxWidth: "100%" }}
           />
         </motion.div>
       </div>

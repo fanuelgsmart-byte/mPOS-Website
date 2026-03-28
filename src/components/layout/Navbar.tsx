@@ -49,8 +49,10 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <a
               href="tel:+251911000000"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors hover:bg-gray-50"
-              style={{ border: "1.5px solid #1F2937", color: "#1F2937" }}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
+              style={{ background: "#1F2937", color: "#FFFFFF" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#111827")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#1F2937")}
             >
               <Phone size={14} strokeWidth={2.5} />
               <span>+251 911 000 000</span>
@@ -91,7 +93,7 @@ export default function Navbar() {
               <a
                 href="tel:+251911000000"
                 className="flex items-center justify-center gap-2 py-3 rounded-full text-sm font-semibold"
-                style={{ border: "1.5px solid #1F2937", color: "#1F2937" }}
+                style={{ background: "#1F2937", color: "#FFFFFF" }}
               >
                 <Phone size={14} strokeWidth={2.5} />
                 +251 911 000 000
