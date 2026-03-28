@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { SITE_NAME, NAV_LINKS } from "@/lib/constants";
-import Button from "@/components/ui/Button";
+import { Menu, X, Phone } from "lucide-react";
+import { SITE_NAME } from "@/lib/constants";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,46 +19,42 @@ export default function Navbar() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-200"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-200 bg-white"
         style={{
-          backgroundColor: scrolled ? "rgba(255,255,255,0.98)" : "#FFFFFF",
-          boxShadow: scrolled ? "0 1px 3px rgba(0,0,0,0.05)" : "none",
-          borderBottom: scrolled ? "none" : "1px solid #F3F4F6",
+          boxShadow: scrolled ? "0 1px 3px rgba(0,0,0,0.04)" : "none",
         }}
       >
-        <div className="container-custom flex items-center justify-between h-16 lg:h-[68px]">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
+        <div className="container-custom flex items-center justify-between h-16 lg:h-[72px]">
+          {/* Logo — matches Khatabook: icon + name */}
+          <Link href="/" className="flex items-center gap-2">
             <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
-              style={{ background: "#22C55E" }}
+              className="w-8 h-8 rounded flex items-center justify-center"
+              style={{ background: "#E53935" }}
             >
-              M
+              <span className="text-white font-bold text-sm">M</span>
             </div>
-            <span className="text-lg font-bold text-gray-900">{SITE_NAME}</span>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">
+              {SITE_NAME}<sup className="text-[8px] text-gray-400 ml-0.5">®</sup>
+            </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} className="nav-link">
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <Link href="#download" className="nav-link">
-              Sign In
-            </Link>
-            <Button
-              href="#download"
-              variant="primary"
-              style={{ minHeight: "40px", padding: "0 1.25rem", borderRadius: "8px" }}
+          {/* Desktop Right — Phone pill + Log In (like Khatabook) */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="tel:+251911000000"
+              className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium transition-colors"
+              style={{ border: "1.5px solid #111827", color: "#111827" }}
             >
-              Get Started Free
-            </Button>
+              <Phone size={14} />
+              <span>+251 911 000 000</span>
+            </a>
+            <Link
+              href="#download"
+              className="px-5 py-2 rounded-full text-sm font-medium transition-colors"
+              style={{ border: "1.5px solid #E5E7EB", color: "#374151" }}
+            >
+              Log In
+            </Link>
           </div>
 
           {/* Mobile toggle */}
@@ -73,7 +68,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -84,38 +79,38 @@ export default function Navbar() {
             className="fixed inset-0 z-40 bg-white md:hidden"
             style={{ paddingTop: "64px" }}
           >
-            <nav className="container-custom py-6 flex flex-col gap-1">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.04 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block py-3.5 text-lg font-medium text-gray-900 border-b border-gray-100"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <div className="mt-6 flex flex-col gap-3">
-                <Button href="#download" variant="primary" className="w-full justify-center">
-                  Get Started Free
-                </Button>
-                <Button href="#download" variant="secondary" className="w-full justify-center">
-                  Sign In
-                </Button>
-              </div>
-            </nav>
+            <div className="container-custom py-6 flex flex-col gap-4">
+              <a
+                href="tel:+251911000000"
+                className="flex items-center justify-center gap-2 py-3 rounded-full text-sm font-medium"
+                style={{ border: "1.5px solid #111827", color: "#111827" }}
+              >
+                <Phone size={14} />
+                +251 911 000 000
+              </a>
+              <Link
+                href="#download"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-center py-3 rounded-full text-sm font-medium text-white"
+                style={{ background: "#E53935" }}
+              >
+                Get Started
+              </Link>
+              <Link
+                href="#download"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-center py-3 rounded-full text-sm font-medium"
+                style={{ border: "1.5px solid #E5E7EB", color: "#374151" }}
+              >
+                Log In
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Spacer */}
-      <div className="h-16 lg:h-[68px]" />
+      <div className="h-16 lg:h-[72px]" />
     </>
   );
 }
