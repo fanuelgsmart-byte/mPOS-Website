@@ -1,7 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
-import AdvertBanner from "@/components/sections/AdvertBanner";
 
 import Features from "@/components/sections/Features";
 import AndMore from "@/components/sections/AndMore";
@@ -16,7 +15,6 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
-        <AdvertBanner />
 
         <Features />
         <AndMore />
