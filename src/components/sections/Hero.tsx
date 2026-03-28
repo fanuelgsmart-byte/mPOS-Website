@@ -205,7 +205,7 @@ export default function Hero() {
           className="w-full lg:w-[52%] relative flex items-end justify-center lg:justify-end"
         >
           <Image
-            src="/hero-mockup.png"
+            src="/hero-mockup.svg"
             alt="Meleket app dashboard and mobile interface"
             width={750}
             height={750}
