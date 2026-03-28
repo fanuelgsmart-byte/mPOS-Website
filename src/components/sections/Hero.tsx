@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { staggerContainer, fadeUp } from "@/lib/motion";
+import { staggerContainer, fadeUp, EASE } from "@/lib/motion";
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -11,38 +11,25 @@ export default function Hero() {
   return (
     <section
       ref={ref}
+      className="relative overflow-hidden"
       style={{
-        position: "relative",
         minHeight: "calc(100vh - 72px)",
         background: "#FFF0EE",
-        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
       }}
     >
       {/* ── Main layout row ── */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          flex: 1,
-          paddingTop: "3.5rem",
-        }}
-      >
-        {/* Left — text content (constrained) */}
+      <div className="flex flex-col lg:flex-row items-center lg:items-start flex-1 pt-10 lg:pt-14">
+        {/* Left — text content */}
         <motion.div
           variants={staggerContainer(0.1)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          style={{
-            paddingLeft: "clamp(1.25rem, 5vw, 5rem)",
-            maxWidth: "min(520px, 48%)",
-            flexShrink: 0,
-            zIndex: 2,
-          }}
+          className="px-5 sm:px-8 lg:pl-[clamp(2.5rem,5vw,5rem)] lg:pr-8 w-full lg:max-w-[520px] lg:flex-shrink-0 z-[2] text-center lg:text-left"
         >
-          {/* Cursive accent — Khatabook's "(aur bhi)" */}
+          {/* Cursive accent — Khatabook "(aur bhi)" */}
           <motion.p
             variants={fadeUp}
             style={{
@@ -56,11 +43,11 @@ export default function Hero() {
             (even more)
           </motion.p>
 
-          {/* Heading — "Business hua easy" equivalent */}
+          {/* Bold headline — Khatabook "Business hua easy" */}
           <motion.h1
             variants={fadeUp}
             style={{
-              fontSize: "clamp(2.75rem, 5.5vw, 4rem)",
+              fontSize: "clamp(2.5rem, 5vw, 3.75rem)",
               fontWeight: 800,
               lineHeight: 1.05,
               letterSpacing: "-0.03em",
@@ -76,7 +63,7 @@ export default function Hero() {
           <motion.p
             variants={fadeUp}
             style={{
-              fontSize: "clamp(1.25rem, 2vw, 1.625rem)",
+              fontSize: "clamp(1.125rem, 1.8vw, 1.5rem)",
               fontWeight: 400,
               color: "#6B7280",
               marginBottom: "2.25rem",
@@ -86,12 +73,12 @@ export default function Hero() {
             with Meleket on any device
           </motion.p>
 
-          {/* Phone number input — exact Khatabook pattern */}
+          {/* Phone number input — Khatabook pattern: [+251 | input | Get Started] */}
           <motion.div variants={fadeUp}>
             <div
+              className="max-w-[440px] mx-auto lg:mx-0"
               style={{
                 display: "flex",
-                maxWidth: "440px",
                 borderRadius: "10px",
                 overflow: "hidden",
                 background: "#FFFFFF",
@@ -134,6 +121,7 @@ export default function Hero() {
               />
               {/* Get Started button — Khatabook red */}
               <button
+                className="hero-get-started-btn"
                 style={{
                   flexShrink: 0,
                   background: "#E53935",
@@ -156,11 +144,12 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right — overlapping device mockups (bleeds to edge) */}
+        {/* Right — overlapping device mockups (bleeds to right edge) */}
         <motion.div
           initial={{ opacity: 0, x: 48 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.65, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.65, delay: 0.15, ease: EASE }}
+          className="hidden lg:flex"
           style={{
             position: "absolute",
             right: 0,
@@ -171,9 +160,8 @@ export default function Hero() {
             alignItems: "flex-end",
             paddingBottom: "120px",
           }}
-          className="hidden lg:flex"
         >
-          {/* Desktop app mockup — large, anchored right, extends off screen */}
+          {/* Desktop app mockup — large, anchored right */}
           <div
             style={{
               position: "absolute",
@@ -236,7 +224,7 @@ export default function Hero() {
                     </div>
                   </div>
                 </div>
-                <p style={{ fontSize: 7, color: "#64748B", padding: "4px 10px 4px", fontWeight: 600, letterSpacing: "0.08em" }}>LEDGER MANAGEMENT</p>
+                <p style={{ fontSize: 7, color: "#64748B", padding: "4px 10px", fontWeight: 600, letterSpacing: "0.08em" }}>LEDGER MANAGEMENT</p>
                 {[
                   { label: "Customers", active: true },
                   { label: "Suppliers", active: false },
@@ -488,7 +476,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ── "One platform" sub-section — inside the hero, bottom strip ── */}
+      {/* ── Bottom feature strip — Khatabook "Manage Digital Bahi Khata | Send Payment Reminders" ── */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -513,13 +501,13 @@ export default function Hero() {
         >
           One platform for all your business needs
         </h3>
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0" }}>
+        <div className="flex flex-wrap items-center gap-0">
           {[
             "Manage Digital Business Ledger",
             "Send Payment Reminders for easy collection",
             "MoR e-Invoice & Z-Report compliance",
           ].map((text, i) => (
-            <div key={text} style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <div key={text} className="flex items-center gap-4">
               <span style={{ fontSize: "0.875rem", color: "#6B7280", lineHeight: 1.4 }}>{text}</span>
               {i < 2 && (
                 <div
