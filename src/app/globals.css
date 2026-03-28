@@ -176,6 +176,114 @@ p  { font-size: 1rem; font-weight: 400; line-height: 1.7; color: #4B5563; }
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
 
+/* ─── Print Types / Your Bill Your Brand ─────────────── */
+.print-types-header {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.print-types-gradient-text {
+  background: linear-gradient(96deg, rgb(206, 173, 253) 2.68%, rgb(172, 138, 219) 96.19%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 1.15em;
+}
+
+.print-types-tabs {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: #F3F4F6;
+  border-radius: 9999px;
+}
+
+.print-types-tab {
+  padding: 0.625rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #6B7280;
+  transition: all 200ms ease;
+}
+.print-types-tab.active {
+  background: #374151;
+  color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+.print-types-tab:not(.active):hover {
+  color: #374151;
+}
+
+.print-types-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .print-types-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.print-types-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.print-types-card:hover {
+  border-color: #D1D5DB;
+}
+
+.print-types-card-preview {
+  padding: 0.75rem;
+  background: #F9FAFB;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.print-types-card-label {
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.print-types-card-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.print-types-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #2563EB;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 200ms ease;
+}
+.print-types-card:hover .print-types-card-cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 /* ─── Keyframes ───────────────────────────────────────── */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
