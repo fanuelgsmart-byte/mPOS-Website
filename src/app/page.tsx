@@ -6,7 +6,7 @@ import Features from "@/components/sections/Features";
 import AndMore from "@/components/sections/AndMore";
 import YourBillYourBrand from "@/components/sections/YourBillYourBrand";
 import EffortlessCompliance from "@/components/sections/EffortlessCompliance";
-import Testimonials from "@/components/sections/Testimonials";
+import GetStartedCTA from "@/components/sections/GetStartedCTA";
 import DownloadCTA from "@/components/sections/DownloadCTA";
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
         <AndMore />
         <YourBillYourBrand />
         <EffortlessCompliance />
-        <Testimonials />
+        <GetStartedCTA />
         <DownloadCTA />
       </main>
       <Footer />
