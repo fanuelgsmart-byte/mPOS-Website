@@ -21,12 +21,12 @@ export default function Hero() {
       }}
     >
       <div className="container-custom flex flex-col lg:flex-row items-center flex-1 relative">
-        {/* LEFT — Text content (Khatabook style: content on left) */}
+        {/* LEFT — Text content */}
         <motion.div
           variants={staggerContainer(0.12)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="w-full lg:w-[50%] py-12 lg:py-20 z-10"
+          className="w-full lg:w-[48%] py-12 lg:py-20 z-10"
         >
           {/* Elevated accent — "(even more)" above title */}
           <motion.div variants={fadeUp} className="mb-2">
@@ -197,200 +197,22 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* RIGHT — App mockups (desktop + mobile + person illustration) */}
+        {/* RIGHT — App mockup image */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="w-full lg:w-[50%] relative flex items-end justify-center lg:justify-end"
-          style={{ minHeight: "400px" }}
+          className="w-full lg:w-[52%] relative flex items-end justify-center lg:justify-end"
         >
-          {/* Background illustration (person/character area) */}
-          <div
-            className="absolute inset-0 flex items-end justify-center"
-            style={{ zIndex: 1 }}
-          >
-            <Image
-              src="/hero-illustration.svg"
-              alt="Business illustration"
-              width={512}
-              height={226}
-              priority
-              className="w-full max-w-[500px] h-auto opacity-40"
-              style={{ transform: "translateY(20px)" }}
-            />
-          </div>
-
-          {/* Desktop dashboard mockup */}
-          <div
-            className="relative z-10"
-            style={{
-              width: "100%",
-              maxWidth: "520px",
-              perspective: "1000px",
-            }}
-          >
-            {/* Desktop frame */}
-            <div
-              style={{
-                background: "#1a1a2e",
-                borderRadius: "12px 12px 0 0",
-                padding: "8px 12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-              }}
-            >
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f57" }} />
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }} />
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#28ca42" }} />
-              <span
-                style={{
-                  marginLeft: "auto",
-                  fontSize: "11px",
-                  color: "#888",
-                  fontWeight: 500,
-                }}
-              >
-                Meleket Dashboard
-              </span>
-            </div>
-            <div
-              style={{
-                background: "#FFFFFF",
-                borderRadius: "0 0 12px 12px",
-                padding: "16px",
-                border: "1px solid #E5E7EB",
-                borderTop: "none",
-              }}
-            >
-              {/* Dashboard header */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div style={{ width: 32, height: 32, borderRadius: "8px", background: "#22C55E", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: "14px" }}>M</div>
-                  <div>
-                    <p style={{ fontSize: "13px", fontWeight: 600, color: "#111827" }}>My Business</p>
-                    <p style={{ fontSize: "10px", color: "#9CA3AF" }}>Addis Ababa</p>
-                  </div>
-                </div>
-                <div className="flex gap-4 text-xs">
-                  <div className="text-center">
-                    <p style={{ color: "#22C55E", fontWeight: 700 }}>ETB 13,480</p>
-                    <p style={{ color: "#9CA3AF", fontSize: "10px" }}>You&apos;ll Get</p>
-                  </div>
-                  <div className="text-center">
-                    <p style={{ color: "#E53935", fontWeight: 700 }}>ETB 2,340</p>
-                    <p style={{ color: "#9CA3AF", fontSize: "10px" }}>You&apos;ll Give</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Tabs */}
-              <div className="flex gap-3 mb-3">
-                <span style={{ fontSize: "12px", fontWeight: 600, color: "#E53935", borderBottom: "2px solid #E53935", paddingBottom: "4px" }}>Customers 120</span>
-                <span style={{ fontSize: "12px", color: "#9CA3AF", paddingBottom: "4px" }}>Suppliers 8</span>
-              </div>
-
-              {/* Customer list */}
-              <div className="flex flex-col gap-2">
-                {[
-                  { name: "Abebe Kebede", time: "Just now", amount: "ETB 300", color: "#22C55E", initials: "AK" },
-                  { name: "Tigist Hailu", time: "2 min ago", amount: "ETB 75", color: "#22C55E", initials: "TH" },
-                  { name: "Yonas Tadesse", time: "1 hour ago", amount: "ETB 140", color: "#E53935", initials: "YT" },
-                  { name: "Meron Bekele", time: "3 hours ago", amount: "ETB 300", color: "#22C55E", initials: "MB" },
-                ].map((customer) => (
-                  <div key={customer.name} className="flex items-center justify-between" style={{ padding: "6px 0", borderBottom: "1px solid #F3F4F6" }}>
-                    <div className="flex items-center gap-2">
-                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#EEF2FF", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: 600, color: "#6366F1" }}>{customer.initials}</div>
-                      <div>
-                        <p style={{ fontSize: "12px", fontWeight: 500, color: "#111827" }}>{customer.name}</p>
-                        <p style={{ fontSize: "10px", color: "#9CA3AF" }}>{customer.time}</p>
-                      </div>
-                    </div>
-                    <p style={{ fontSize: "12px", fontWeight: 700, color: customer.color }}>{customer.amount}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Mobile phone mockup — overlapping bottom-right */}
-            <div
-              className="absolute z-20 hidden md:block"
-              style={{
-                bottom: "-20px",
-                right: "-40px",
-                width: "160px",
-              }}
-            >
-              <div
-                style={{
-                  background: "#111827",
-                  borderRadius: "20px",
-                  padding: "6px",
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.2)",
-                }}
-              >
-                {/* Phone notch */}
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: "4px" }}>
-                  <div style={{ width: "40px", height: "4px", borderRadius: "2px", background: "#333" }} />
-                </div>
-                {/* Phone screen */}
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    borderRadius: "14px",
-                    padding: "10px 8px",
-                    minHeight: "220px",
-                  }}
-                >
-                  {/* Mobile app header */}
-                  <div className="flex items-center gap-1 mb-2">
-                    <div style={{ width: 20, height: 20, borderRadius: "6px", background: "#22C55E", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: "9px" }}>M</div>
-                    <span style={{ fontSize: "9px", fontWeight: 600 }}>My Business</span>
-                    <span style={{ marginLeft: "auto", fontSize: "8px", color: "#22C55E" }}>Online</span>
-                  </div>
-
-                  {/* Mobile tabs */}
-                  <div className="flex gap-2 mb-2">
-                    <span style={{ fontSize: "8px", fontWeight: 600, color: "#E53935", background: "#FEE2E2", borderRadius: "4px", padding: "2px 6px" }}>Customers</span>
-                    <span style={{ fontSize: "8px", color: "#9CA3AF", padding: "2px 6px" }}>Suppliers</span>
-                  </div>
-
-                  {/* Mobile stats */}
-                  <div className="flex justify-between mb-2" style={{ padding: "4px 6px", background: "#F9FAFB", borderRadius: "6px" }}>
-                    <div>
-                      <p style={{ fontSize: "7px", color: "#9CA3AF" }}>You&apos;ll get</p>
-                      <p style={{ fontSize: "9px", fontWeight: 700, color: "#22C55E" }}>ETB 1,200</p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: "7px", color: "#9CA3AF" }}>You&apos;ll give</p>
-                      <p style={{ fontSize: "9px", fontWeight: 700, color: "#E53935" }}>ETB 3,070</p>
-                    </div>
-                  </div>
-
-                  {/* Mobile customer list */}
-                  {[
-                    { name: "Arun B.", amount: "200", initials: "AB" },
-                    { name: "Rajat J.", amount: "Remind", initials: "RJ" },
-                    { name: "Babita J.", amount: "3,000", initials: "BJ" },
-                  ].map((c) => (
-                    <div key={c.name} className="flex items-center justify-between" style={{ padding: "3px 0", borderBottom: "1px solid #F3F4F6" }}>
-                      <div className="flex items-center gap-1">
-                        <div style={{ width: 16, height: 16, borderRadius: "50%", background: "#EEF2FF", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "6px", fontWeight: 600, color: "#6366F1" }}>{c.initials}</div>
-                        <span style={{ fontSize: "8px", color: "#111827" }}>{c.name}</span>
-                      </div>
-                      <span style={{ fontSize: "8px", fontWeight: 600, color: c.amount === "Remind" ? "#E53935" : "#22C55E" }}>{c.amount === "Remind" ? "Remind >" : `ETB ${c.amount}`}</span>
-                    </div>
-                  ))}
-
-                  {/* Add customer button */}
-                  <div style={{ marginTop: "8px", background: "#E53935", borderRadius: "6px", padding: "4px", textAlign: "center" }}>
-                    <span style={{ fontSize: "8px", fontWeight: 600, color: "#fff" }}>+ Add Customer</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Image
+            src="/hero-mockup.png"
+            alt="Meleket app dashboard and mobile interface"
+            width={750}
+            height={750}
+            priority
+            className="w-full max-w-[650px] h-auto object-contain"
+            style={{ marginBottom: "-4px" }}
+          />
         </motion.div>
       </div>
 
