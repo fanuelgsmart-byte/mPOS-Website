@@ -30,7 +30,7 @@ const SOCIAL = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#FFFFFF", borderTop: "1px solid #E5E7EB" }}>
+    <footer style={{ background: "#F0F2F4", borderTop: "1px solid #E5E7EB" }}>
       <div className="container-custom py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           {/* Brand column */}
