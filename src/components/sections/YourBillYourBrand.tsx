@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { staggerContainer, fadeUp } from "@/lib/motion";
+import { Scissors } from "lucide-react";
 import Image from "next/image";
 
 const TABS = ["Thermal Prints", "A4 Prints", "A5 Prints"] as const;
@@ -15,29 +16,24 @@ interface TemplateCard {
 
 const A4_TEMPLATES: TemplateCard[] = [
   {
-    name: "Luxury Theme",
+    name: "Classic",
     image: "/invoice-templates/a4-print-1.webp",
-    alt: "Luxury invoice template",
-  },
-  {
-    name: "Special Themes",
-    image: "/invoice-templates/a4-print-2.webp",
-    alt: "Special Themes",
-  },
-  {
-    name: "Custom Invoice",
-    image: "/invoice-templates/a4-print-3.png",
-    alt: "Custom GST Invoice Format",
-  },
-  {
-    name: "Stylish",
-    image: "/invoice-templates/a4-print-4.webp",
-    alt: "Invoice Template Stylish",
+    alt: "Classic invoice template",
   },
   {
     name: "Modern",
+    image: "/invoice-templates/a4-print-2.webp",
+    alt: "Modern invoice template",
+  },
+  {
+    name: "Luxury",
+    image: "/invoice-templates/a4-print-4.webp",
+    alt: "Luxury invoice template",
+  },
+  {
+    name: "Stylish",
     image: "/invoice-templates/a4-print-5.webp",
-    alt: "GST Invoice Template",
+    alt: "Stylish invoice template",
   },
 ];
 
@@ -63,7 +59,7 @@ export default function YourBillYourBrand() {
     activeTab === 1 ? A4_TEMPLATES : activeTab === 2 ? A5_TEMPLATES : [];
 
   return (
-    <section id="print-types" ref={ref} className="section-padding bg-white">
+    <section id="invoicing" ref={ref} className="section-padding bg-white">
       <div className="container-custom">
         {/* Heading */}
         <motion.div
@@ -74,13 +70,12 @@ export default function YourBillYourBrand() {
         >
           <h2 className="print-types-header">
             Your bill, Your Brand{" "}
-            <span className="print-types-gradient-text">Font</span>
+            <span className="print-types-gradient-text">And More!</span>
           </h2>
           <p className="mt-4 text-gray-500 max-w-2xl mx-auto text-base leading-relaxed">
-            Fully customisable GST &amp; non-GST invoices with multiple invoice
-            theme options. Get the power to personalise your invoices that
-            reflect your brand&apos;s identity, exclusively on myBillBook GST
-            Billing Software
+            Fully customisable invoices with multiple invoice theme options. Get
+            the power to personalise your invoices that reflect your brand&apos;s
+            identity, exclusively on Meleket Billing Software
           </p>
         </motion.div>
 
@@ -114,47 +109,63 @@ export default function YourBillYourBrand() {
             transition={{ duration: 0.35 }}
           >
             {activeTab === 0 ? (
-              /* Thermal Print - single image */
-              <div className="flex justify-center">
-                <div className="print-types-card print-types-card-thermal">
-                  <div className="print-types-card-image-wrap">
-                    <Image
-                      src="/invoice-templates/thermal-print.webp"
-                      alt="Thermal Print in Billing Software"
-                      width={400}
-                      height={600}
-                      className="print-types-card-img"
-                    />
-                    {/* Hover overlay */}
-                    <div className="print-types-card-overlay">
-                      <div className="print-types-card-overlay-content">
-                        <span className="print-types-card-overlay-name">
-                          Thermal Print
-                        </span>
-                        <span className="print-types-card-overlay-cta">
-                          Start Using Templates{" "}
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                          >
-                            <path
-                              d="M5 10h10m0 0l-4-4m4 4l-4 4"
-                              stroke="#2563EB"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </span>
-                      </div>
+              /* Thermal Print - two overlapping receipts with size labels */
+              <div className="flex justify-center items-end gap-0 relative"
+                   style={{ minHeight: 500 }}>
+                {/* 2 inch receipt */}
+                <div className="relative" style={{ zIndex: 2, marginRight: -40 }}>
+                  <div className="print-types-card" style={{ width: 220, boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
+                    <div className="print-types-card-image-wrap">
+                      <Image
+                        src="/invoice-templates/thermal-print.webp"
+                        alt="2 inch Thermal Print"
+                        width={220}
+                        height={400}
+                        className="print-types-card-img"
+                      />
                     </div>
                   </div>
+                  <span
+                    className="absolute text-white text-sm font-semibold px-4 py-1.5 rounded-full"
+                    style={{
+                      background: "#6366F1",
+                      bottom: 80,
+                      left: 20,
+                      zIndex: 3,
+                    }}
+                  >
+                    2 inch
+                  </span>
+                </div>
+
+                {/* 3 inch receipt */}
+                <div className="relative" style={{ zIndex: 1 }}>
+                  <div className="print-types-card" style={{ width: 280, boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
+                    <div className="print-types-card-image-wrap">
+                      <Image
+                        src="/invoice-templates/thermal-print.webp"
+                        alt="3 inch Thermal Print"
+                        width={280}
+                        height={480}
+                        className="print-types-card-img"
+                      />
+                    </div>
+                  </div>
+                  <span
+                    className="absolute text-white text-sm font-semibold px-4 py-1.5 rounded-full"
+                    style={{
+                      background: "#111827",
+                      top: 20,
+                      right: 20,
+                      zIndex: 3,
+                    }}
+                  >
+                    3 inch
+                  </span>
                 </div>
               </div>
             ) : (
-              /* A4 / A5 Templates */
+              /* A4 / A5 Templates Grid */
               <motion.div
                 variants={staggerContainer(0.08)}
                 initial="hidden"
@@ -182,7 +193,7 @@ export default function YourBillYourBrand() {
                             {template.name}
                           </span>
                           <span className="print-types-card-overlay-cta">
-                            Start Using Templates{" "}
+                            Use Template{" "}
                             <svg
                               width="16"
                               height="16"
@@ -203,6 +214,25 @@ export default function YourBillYourBrand() {
                     </div>
                   </motion.div>
                 ))}
+
+                {/* Customize your own Invoice card (A4 only) */}
+                {activeTab === 1 && (
+                  <motion.div
+                    variants={fadeUp}
+                    className="print-types-card flex flex-col items-center justify-center p-8 text-center"
+                    style={{ minHeight: 300, background: "#FAFAFA", border: "2px dashed #E5E7EB" }}
+                  >
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
+                      style={{ background: "#F3F4F6" }}
+                    >
+                      <Scissors size={24} color="#6B7280" />
+                    </div>
+                    <p className="font-semibold text-gray-800 text-base">
+                      Customize your own Invoice
+                    </p>
+                  </motion.div>
+                )}
               </motion.div>
             )}
           </motion.div>
