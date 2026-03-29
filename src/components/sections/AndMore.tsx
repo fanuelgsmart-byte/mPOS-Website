@@ -96,7 +96,7 @@ export default function AndMore() {
         {/* Mobile: center image */}
         <div className="flex justify-center mb-10 lg:hidden">
           <Image
-            src="/hero-mockup.svg"
+            src="/benefits_of_gst_billing_and_invoicing_software.webp"
             alt="Meleket Billing App"
             width={280}
             height={380}
@@ -129,7 +129,7 @@ export default function AndMore() {
           <div className="hidden lg:flex flex-shrink-0 items-center justify-center self-center"
                style={{ width: 350 }}>
             <Image
-              src="/hero-mockup.svg"
+              src="/benefits_of_gst_billing_and_invoicing_software.webp"
               alt="Meleket Billing App"
               width={350}
               height={470}
