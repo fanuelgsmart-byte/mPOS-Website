@@ -39,14 +39,24 @@ const A4_TEMPLATES: TemplateCard[] = [
 
 const A5_TEMPLATES: TemplateCard[] = [
   {
-    name: "Billbook (A5)",
+    name: "Billbook",
     image: "/invoice-templates/a5-print-1.webp",
-    alt: "GST Billing Software A5 Print",
+    alt: "Billing Software A5 Print",
   },
   {
-    name: "Advanced GST (A5)",
+    name: "Advanced",
     image: "/invoice-templates/a5-print-2.webp",
     alt: "Online billing software A5 Print",
+  },
+  {
+    name: "Classic",
+    image: "/invoice-templates/a4-print-1.webp",
+    alt: "Classic A5 style template",
+  },
+  {
+    name: "Custom",
+    image: "/invoice-templates/a4-print-3.png",
+    alt: "Custom A5 style invoice",
   },
 ];
 
@@ -84,7 +94,7 @@ export default function YourBillYourBrand() {
           initial={{ opacity: 0, y: 10 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="flex justify-center mb-12"
+          className="flex justify-center mb-8"
         >
           <div className="print-types-tabs">
             {TABS.map((tab, i) => (
@@ -109,59 +119,25 @@ export default function YourBillYourBrand() {
             transition={{ duration: 0.35 }}
           >
             {activeTab === 0 ? (
-              /* Thermal Print - two overlapping receipts with size labels */
-              <div className="flex justify-center items-end gap-0 relative"
-                   style={{ minHeight: 500 }}>
+              /* Thermal Print - overlapping receipts, tightly grouped */
+              <div className="flex justify-center items-end relative" style={{ minHeight: 360, paddingTop: "1rem" }}>
                 {/* 2 inch receipt */}
-                <div className="relative" style={{ zIndex: 2, marginRight: -40 }}>
-                  <div className="print-types-card" style={{ width: 220, boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
+                <div className="relative" style={{ zIndex: 2, marginRight: -30 }}>
+                  <div className="print-types-card" style={{ width: 200, boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
                     <div className="print-types-card-image-wrap">
-                      <Image
-                        src="/invoice-templates/thermal-print.webp"
-                        alt="2 inch Thermal Print"
-                        width={220}
-                        height={400}
-                        className="print-types-card-img"
-                      />
+                      <Image src="/invoice-templates/thermal-print.webp" alt="2 inch Thermal Print" width={200} height={360} className="print-types-card-img" />
                     </div>
                   </div>
-                  <span
-                    className="absolute text-white text-sm font-semibold px-4 py-1.5 rounded-full"
-                    style={{
-                      background: "#6366F1",
-                      bottom: 80,
-                      left: 20,
-                      zIndex: 3,
-                    }}
-                  >
-                    2 inch
-                  </span>
+                  <span className="absolute text-white text-xs font-semibold px-3 py-1 rounded-full" style={{ background: "#6366F1", bottom: 60, left: 16, zIndex: 3 }}>2 inch</span>
                 </div>
-
                 {/* 3 inch receipt */}
                 <div className="relative" style={{ zIndex: 1 }}>
-                  <div className="print-types-card" style={{ width: 280, boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
+                  <div className="print-types-card" style={{ width: 260, boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
                     <div className="print-types-card-image-wrap">
-                      <Image
-                        src="/invoice-templates/thermal-print.webp"
-                        alt="3 inch Thermal Print"
-                        width={280}
-                        height={480}
-                        className="print-types-card-img"
-                      />
+                      <Image src="/invoice-templates/thermal-print.webp" alt="3 inch Thermal Print" width={260} height={420} className="print-types-card-img" />
                     </div>
                   </div>
-                  <span
-                    className="absolute text-white text-sm font-semibold px-4 py-1.5 rounded-full"
-                    style={{
-                      background: "#111827",
-                      top: 20,
-                      right: 20,
-                      zIndex: 3,
-                    }}
-                  >
-                    3 inch
-                  </span>
+                  <span className="absolute text-white text-xs font-semibold px-3 py-1 rounded-full" style={{ background: "#111827", top: 16, right: 16, zIndex: 3 }}>3 inch</span>
                 </div>
               </div>
             ) : (
