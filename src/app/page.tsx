@@ -6,6 +6,7 @@ import Features from "@/components/sections/Features";
 import AndMore from "@/components/sections/AndMore";
 import YourBillYourBrand from "@/components/sections/YourBillYourBrand";
 import EffortlessCompliance from "@/components/sections/EffortlessCompliance";
+import OurBlogs from "@/components/sections/OurBlogs";
 import GetStartedCTA from "@/components/sections/GetStartedCTA";
 import DownloadCTA from "@/components/sections/DownloadCTA";
 
@@ -20,6 +21,7 @@ export default function Home() {
         <AndMore />
         <YourBillYourBrand />
         <EffortlessCompliance />
+        <OurBlogs />
         <GetStartedCTA />
         <DownloadCTA />
       </main>

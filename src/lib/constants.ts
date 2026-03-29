@@ -338,3 +338,54 @@ export const INDUSTRIES = [
   { icon: "🔧", label: "Service Providers" },
   { icon: "💊", label: "Pharmacies" },
 ];
+
+export const BLOG_POSTS = [
+  {
+    id: 1,
+    thumbnail: "#E53935",
+    category: "Compliance",
+    title: "MoR e-Invoicing: Everything Ethiopian Businesses Need to Know",
+    summary:
+      "Learn how to stay compliant with Ministry of Revenue requirements including IRN generation, QR codes, and automatic Z-Report transmission.",
+  },
+  {
+    id: 2,
+    thumbnail: "#3B82F6",
+    category: "Tax Guide",
+    title: "VAT vs TOT: Which Tax Applies to Your Business?",
+    summary:
+      "A simple breakdown of Value Added Tax and Turnover Tax thresholds in Ethiopia, and how to configure your billing software accordingly.",
+  },
+  {
+    id: 3,
+    thumbnail: "#22C55E",
+    category: "Inventory",
+    title: "5 Inventory Management Tips for Ethiopian Retailers",
+    summary:
+      "From setting reorder points to FIFO costing, discover practical strategies to reduce stockouts and minimize waste in your shop.",
+  },
+  {
+    id: 4,
+    thumbnail: "#F59E0B",
+    category: "Billing Tips",
+    title: "How to Create Professional Invoices with Meleket",
+    summary:
+      "Step-by-step guide to customizing invoice themes, adding your logo, and generating MoR-compliant receipts that build customer trust.",
+  },
+  {
+    id: 5,
+    thumbnail: "#8B5CF6",
+    category: "Payroll",
+    title: "Simplify Staff Payroll: Attendance to Salary Slips",
+    summary:
+      "Automate salary calculations, track attendance, and generate pay slips for your team — all from a single app on your phone.",
+  },
+  {
+    id: 6,
+    thumbnail: "#EC4899",
+    category: "Growth",
+    title: "Digital Payments in Ethiopia: Telebirr & CBE Birr for Your Business",
+    summary:
+      "How accepting mobile payments can increase your revenue and improve customer satisfaction in today's cashless economy.",
+  },
+];
