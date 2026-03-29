@@ -149,6 +149,7 @@ export default function OurBlogs() {
                     }}
                   />
                   <div style={{ textAlign: "center", zIndex: 1 }}>
+                    {/* @ts-expect-error strokeWidth valid on lucide icons */}
                     <Icon size={48} color="rgba(255,255,255,0.9)" strokeWidth={1.5} />
                     <p
                       style={{

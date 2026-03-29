@@ -8,7 +8,6 @@ import YourBillYourBrand from "@/components/sections/YourBillYourBrand";
 import EffortlessCompliance from "@/components/sections/EffortlessCompliance";
 import OurBlogs from "@/components/sections/OurBlogs";
 import GetStartedCTA from "@/components/sections/GetStartedCTA";
-import DownloadCTA from "@/components/sections/DownloadCTA";
 
 export default function Home() {
   return (
@@ -23,7 +22,6 @@ export default function Home() {
         <EffortlessCompliance />
         <OurBlogs />
         <GetStartedCTA />
-        <DownloadCTA />
       </main>
       <Footer />
     </div>
