@@ -7,13 +7,12 @@ const codeChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678
 
 export function CardScanner() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const particleCanvasRef = useRef<HTMLCanvasElement>(null)
   const scannerCanvasRef = useRef<HTMLCanvasElement>(null)
   const cardStreamRef = useRef<HTMLDivElement>(null)
   const cardLineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!cardLineRef.current || !particleCanvasRef.current || !scannerCanvasRef.current) return
+    if (!cardLineRef.current || !scannerCanvasRef.current) return
 
     // CardStreamController
     class CardStreamController {
@@ -441,191 +440,6 @@ export function CardScanner() {
         updateClipping()
       }
     }
-
-    // ParticleSystem
-    class ParticleSystem {
-      scene: THREE.Scene
-      camera: THREE.OrthographicCamera
-      renderer: THREE.WebGLRenderer
-      particles: THREE.Points | null
-      particleCount: number
-      canvas: HTMLCanvasElement
-      velocities: Float32Array
-      alphas: Float32Array
-
-      constructor(canvas: HTMLCanvasElement) {
-        this.scene = new THREE.Scene()
-        this.camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, 125, -125, 1, 1000)
-        this.camera.position.z = 100
-        this.renderer = new THREE.WebGLRenderer({
-          canvas: canvas,
-          alpha: true,
-          antialias: true,
-        })
-        this.renderer.setSize(window.innerWidth, 250)
-        this.renderer.setClearColor(0x000000, 0)
-        this.particles = null
-        this.particleCount = 400
-        this.velocities = new Float32Array(0)
-        this.alphas = new Float32Array(0)
-        this.canvas = canvas
-
-        this.createParticles()
-        this.animate()
-
-        window.addEventListener("resize", () => this.onWindowResize())
-      }
-
-      createParticles() {
-        const geometry = new THREE.BufferGeometry()
-        const positions = new Float32Array(this.particleCount * 3)
-        const colors = new Float32Array(this.particleCount * 3)
-        const sizes = new Float32Array(this.particleCount)
-        const velocities = new Float32Array(this.particleCount)
-
-        const canvas = document.createElement("canvas")
-        canvas.width = 100
-        canvas.height = 100
-        const ctx = canvas.getContext("2d")
-        if (!ctx) return
-
-        const half = canvas.width / 2
-        const hue = 217
-
-        const gradient = ctx.createRadialGradient(half, half, 0, half, half, half)
-        gradient.addColorStop(0.025, "#fff")
-        gradient.addColorStop(0.1, `hsl(${hue}, 61%, 33%)`)
-        gradient.addColorStop(0.25, `hsl(${hue}, 64%, 6%)`)
-        gradient.addColorStop(1, "transparent")
-
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.arc(half, half, half, 0, Math.PI * 2)
-        ctx.fill()
-
-        const texture = new THREE.CanvasTexture(canvas)
-
-        for (let i = 0; i < this.particleCount; i++) {
-          positions[i * 3] = (Math.random() - 0.5) * window.innerWidth * 2
-          positions[i * 3 + 1] = (Math.random() - 0.5) * 250
-          positions[i * 3 + 2] = 0
-
-          colors[i * 3] = 1
-          colors[i * 3 + 1] = 1
-          colors[i * 3 + 2] = 1
-
-          const orbitRadius = Math.random() * 200 + 100
-          sizes[i] = (Math.random() * (orbitRadius - 60) + 60) / 8
-
-          velocities[i] = Math.random() * 60 + 30
-        }
-
-        geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3))
-        geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3))
-        geometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1))
-
-        this.velocities = velocities
-
-        const alphas = new Float32Array(this.particleCount)
-        for (let i = 0; i < this.particleCount; i++) {
-          alphas[i] = (Math.random() * 8 + 2) / 10
-        }
-        geometry.setAttribute("alpha", new THREE.BufferAttribute(alphas, 1))
-        this.alphas = alphas
-
-        const material = new THREE.ShaderMaterial({
-          uniforms: {
-            pointTexture: { value: texture },
-            size: { value: 15.0 },
-          },
-          vertexShader: `
-            attribute float alpha;
-            varying float vAlpha;
-            varying vec3 vColor;
-            uniform float size;
-            
-            void main() {
-              vAlpha = alpha;
-              vColor = color;
-              vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-              gl_PointSize = size;
-              gl_Position = projectionMatrix * mvPosition;
-            }
-          `,
-          fragmentShader: `
-            uniform sampler2D pointTexture;
-            varying float vAlpha;
-            varying vec3 vColor;
-            
-            void main() {
-              gl_FragColor = vec4(vColor, vAlpha) * texture2D(pointTexture, gl_PointCoord);
-            }
-          `,
-          transparent: true,
-          blending: THREE.AdditiveBlending,
-          depthWrite: false,
-          vertexColors: true,
-        })
-
-        this.particles = new THREE.Points(geometry, material)
-        this.scene.add(this.particles)
-      }
-
-      animate() {
-        requestAnimationFrame(() => this.animate())
-
-        if (this.particles) {
-          const positions = this.particles.geometry.attributes.position.array as Float32Array
-          const alphas = this.particles.geometry.attributes.alpha.array as Float32Array
-          const time = Date.now() * 0.001
-
-          for (let i = 0; i < this.particleCount; i++) {
-            positions[i * 3] += this.velocities[i] * 0.016
-
-            if (positions[i * 3] > window.innerWidth / 2 + 100) {
-              positions[i * 3] = -window.innerWidth / 2 - 100
-              positions[i * 3 + 1] = (Math.random() - 0.5) * 250
-            }
-
-            positions[i * 3 + 1] += Math.sin(time + i * 0.1) * 0.5
-
-            const twinkle = Math.floor(Math.random() * 10)
-            if (twinkle === 1 && alphas[i] > 0) {
-              alphas[i] -= 0.05
-            } else if (twinkle === 2 && alphas[i] < 1) {
-              alphas[i] += 0.05
-            }
-
-            alphas[i] = Math.max(0, Math.min(1, alphas[i]))
-          }
-
-          this.particles.geometry.attributes.position.needsUpdate = true
-          this.particles.geometry.attributes.alpha.needsUpdate = true
-        }
-
-        this.renderer.render(this.scene, this.camera)
-      }
-
-      onWindowResize() {
-        this.camera.left = -window.innerWidth / 2
-        this.camera.right = window.innerWidth / 2
-        this.camera.updateProjectionMatrix()
-
-        this.renderer.setSize(window.innerWidth, 250)
-      }
-
-      destroy() {
-        if (this.renderer) {
-          this.renderer.dispose()
-        }
-        if (this.particles) {
-          this.scene.remove(this.particles)
-          this.particles.geometry.dispose()
-          ;(this.particles.material as THREE.Material).dispose()
-        }
-      }
-    }
-
     // ParticleScanner
     class ParticleScanner {
       canvas: HTMLCanvasElement
@@ -661,7 +475,7 @@ export function CardScanner() {
         this.animationId = null
 
         this.w = window.innerWidth
-        this.h = 300
+        this.h = 250
         this.particles = []
         this.count = 0
         this.maxParticles = 800
@@ -1034,7 +848,6 @@ export function CardScanner() {
 
     // Initialize all systems
     const cardStream = new CardStreamController(cardStreamRef.current!, cardLineRef.current!)
-    const particleSystem = new ParticleSystem(particleCanvasRef.current!)
     const particleScanner = new ParticleScanner(scannerCanvasRef.current!)
     ;(window as any).setScannerScanning = (active: boolean) => {
       if (particleScanner) {
@@ -1044,7 +857,6 @@ export function CardScanner() {
 
     // Cleanup
     return () => {
-      particleSystem.destroy()
       particleScanner.destroy()
     }
   }, [])
@@ -1326,31 +1138,19 @@ export function CardScanner() {
   }
 }
 
-        #particleCanvas {
-          position: absolute;
-          top: 50%;
-          left: 0;
-          transform: translateY(-50%);
-          width: 100%;
-          height: 250px;
-          z-index: 0;
-          pointer-events: none;
-        }
-
         #scannerCanvas {
           position: absolute;
           top: 50%;
           left: -3px;
           transform: translateY(-50%);
           width: 100%;
-          height: 300px;
+          height: 250px;
           z-index: 15;
           pointer-events: none;
         }
       `}</style>
 
       <div className="card-scanner-container" ref={containerRef}>
-        <canvas ref={particleCanvasRef} id="particleCanvas" />
         <canvas ref={scannerCanvasRef} id="scannerCanvas" />
 
         {/* Section header */}
