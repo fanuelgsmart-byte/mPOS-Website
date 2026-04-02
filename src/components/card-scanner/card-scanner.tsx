@@ -301,16 +301,15 @@ export function CardScanner() {
         normalCard.className = "card card-normal"
 
         const cardImages = [
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/card-v0%20%284%29-L2olSQFCLIsANM4LTAY0TJgTqR1VZJ.png",
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/card-v0%20%282%29-VLGvdkPYwL2BNLcAqgDtDEPREtBeBd.png",
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/card-v0%20%281%29-HgN8MWOotWPF2GDoRZvNWcfDHIBux4.png",
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/card-v0%20%283%29-pXItHLoh6zAJPckxuu4WttdzRVhRWU.png",
+          "/cards/cash-register.png",
+          "/cards/pos-machine.png",
+          "/cards/peachtree-software.png",
         ]
 
         const cardImage = document.createElement("img")
         cardImage.className = "card-image"
         cardImage.src = cardImages[index % cardImages.length]
-        cardImage.alt = "v0 Credit Card"
+        cardImage.alt = ["Cash Register", "POS Machine", "Peachtree Software"][index % 3]
 
         cardImage.onerror = () => {
           const canvas = document.createElement("canvas")

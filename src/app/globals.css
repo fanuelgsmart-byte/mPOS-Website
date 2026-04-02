@@ -332,6 +332,250 @@ p  { font-size: 1rem; font-weight: 400; line-height: 1.7; color: #4B5563; }
 }
 .animate-marquee { animation: marquee 20s linear infinite; }
 
+/* ─── Burning Cards Section ───────────────────────────── */
+.burning-cards-section {
+  background: #0A0A0F;
+  padding: 5rem 0;
+  overflow: hidden;
+  position: relative;
+}
+.burning-cards-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(59,130,246,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(229,57,53,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Starfield dots */
+.burning-cards-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.15), transparent),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.1), transparent),
+    radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.12), transparent),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.08), transparent),
+    radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.1), transparent),
+    radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.1), transparent),
+    radial-gradient(1px 1px at 85% 10%, rgba(255,255,255,0.12), transparent),
+    radial-gradient(1px 1px at 45% 15%, rgba(255,255,255,0.08), transparent),
+    radial-gradient(1px 1px at 65% 55%, rgba(255,255,255,0.1), transparent),
+    radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.06), transparent);
+  pointer-events: none;
+}
+
+.burning-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .burning-cards-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    gap: 2rem;
+  }
+}
+
+/* ─── Individual Card ─────────────────────────────────── */
+.burning-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #111119;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* The underlying image */
+.burning-card-image {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+/* ─── Code Overlay ────────────────────────────────────── */
+.burning-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 20, 0.92);
+  overflow: hidden;
+  z-index: 2;
+  animation: burnOverlay 10s ease-in-out infinite;
+}
+
+.burning-card-code-scroll {
+  animation: codeScrollUp 12s linear infinite;
+  padding: 0.75rem;
+  font-family: "Courier New", "Fira Code", monospace;
+  font-size: 0.65rem;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.burning-card-code-line {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.burning-card-line-num {
+  color: rgba(255,255,255,0.15);
+  user-select: none;
+  flex-shrink: 0;
+  width: 1.5em;
+  text-align: right;
+}
+
+.burning-card-comment {
+  color: rgba(74, 222, 128, 0.5);
+}
+
+.burning-card-keyword {
+  color: rgba(147, 197, 253, 0.7);
+}
+
+.burning-card-code {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ─── Burn Line (bright vertical sweep) ───────────────── */
+.burning-card-burn-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  z-index: 4;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,255,255,0.3) 10%,
+    rgba(200,220,255,0.95) 40%,
+    #FFFFFF 50%,
+    rgba(200,220,255,0.95) 60%,
+    rgba(255,255,255,0.3) 90%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 15px 4px rgba(180,200,255,0.5),
+    0 0 40px 8px rgba(140,180,255,0.25),
+    0 0 80px 16px rgba(100,150,255,0.1);
+  animation: burnLineSweep 10s ease-in-out infinite;
+  opacity: 0;
+}
+
+/* ─── Ember Particles ─────────────────────────────────── */
+.burning-card-embers {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  animation: embersVisible 10s ease-in-out infinite;
+  opacity: 0;
+}
+
+.burning-card-ember {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #FFD700;
+  box-shadow: 0 0 4px 1px rgba(255,165,0,0.6);
+  animation: emberFloat 0.8s ease-out infinite;
+  opacity: 0;
+}
+
+/* ─── Post-burn scrolling text bar ────────────────────── */
+.burning-card-textbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  z-index: 3;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 8px;
+  animation: textbarReveal 10s ease-in-out infinite;
+  opacity: 0;
+}
+
+.burning-card-textbar-inner {
+  display: flex;
+  gap: 2rem;
+  white-space: nowrap;
+  animation: textbarScroll 15s linear infinite;
+}
+
+.burning-card-textbar-inner span {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.02em;
+}
+
+/* ═══ Keyframe Animations ═════════════════════════════ */
+
+/* Code text scrolls upward continuously */
+@keyframes codeScrollUp {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+/* Code overlay: visible → burn away → hidden → fade back */
+@keyframes burnOverlay {
+  0%, 15%   { clip-path: inset(0 0 0 0); opacity: 1; }
+  35%       { clip-path: inset(0 0 0 100%); opacity: 1; }
+  80%       { clip-path: inset(0 0 0 100%); opacity: 0; }
+  95%, 100% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Burn line sweeps left to right during burn phase */
+@keyframes burnLineSweep {
+  0%, 14%   { left: -5%; opacity: 0; }
+  15%       { left: -5%; opacity: 1; }
+  35%       { left: 100%; opacity: 1; }
+  36%, 100% { left: 100%; opacity: 0; }
+}
+
+/* Embers visible during burn phase */
+@keyframes embersVisible {
+  0%, 14%   { opacity: 0; }
+  18%, 32%  { opacity: 1; }
+  36%, 100% { opacity: 0; }
+}
+
+/* Individual ember floats up and fades */
+@keyframes emberFloat {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  100% { transform: translate(8px, -20px) scale(0); opacity: 0; }
+}
+
+/* Text bar appears after burn, hides before code returns */
+@keyframes textbarReveal {
+  0%, 34%   { opacity: 0; }
+  40%, 80%  { opacity: 1; }
+  88%, 100% { opacity: 0; }
+}
+
+/* Text scrolls horizontally */
+@keyframes textbarScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* ─── Login Modal Utilities ───────────────────────────── */
 .glass-effect {
   backdrop-filter: blur(25px) saturate(180%);
@@ -393,5 +637,6 @@ p  { font-size: 1rem; font-weight: 400; line-height: 1.7; color: #4B5563; }
   --ring: oklch(0.65 0.15 45 / 0.5);
   --radius: 1rem;
 }
+
 
 
