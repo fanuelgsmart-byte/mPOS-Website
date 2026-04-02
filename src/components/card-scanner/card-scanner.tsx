@@ -3,8 +3,6 @@
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
 
-const codeChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(){}[]<>;:,._-+=!@#$%^&*|\\/\"'`~?"
-
 export function CardScanner() {
   const containerRef = useRef<HTMLDivElement>(null)
   const scannerCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -164,13 +162,15 @@ export function CardScanner() {
       }
 
       updateCardPosition() {
-        const containerWidth = this.containerWidth
-        const cardLineWidth = this.cardLineWidth
+        // Seamless infinite loop: the card line has 2 identical halves.
+        // When we scroll past one half, jump back by exactly one half-width
+        // so the user never sees a seam.
+        const halfWidth = this.cardLineWidth / 2
 
-        if (this.position < -cardLineWidth) {
-          this.position = containerWidth
-        } else if (this.position > containerWidth) {
-          this.position = -cardLineWidth
+        if (this.position < -halfWidth) {
+          this.position += halfWidth
+        } else if (this.position > 0) {
+          this.position -= halfWidth
         }
 
         this.cardLine.style.transform = `translateX(${this.position}px)`
@@ -187,89 +187,34 @@ export function CardScanner() {
       }
 
       generateCode(width: number, height: number): string {
-        const randInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min
-        const pick = (arr: string[]) => arr[randInt(0, arr.length - 1)]
+        const pick = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)]
 
-        const header = [
-          "// v0: transforming ideas into reality",
-          "/* grateful for the power to create and innovate */",
-          "const V0_PLATFORM = 'revolutionary';",
-          "const CREATIVITY = 'unlimited';",
-          "const POSSIBILITIES = Infinity;",
-          "const GRATITUDE = 'immense';",
+        const library = [
+          "/* የገንዘብ ሂደትን ወደ ጥራት መቀየር • ዘመናዊ የሂሳብ ስርዓት */",
+          "const መድረክ = \"በኢትዮጵያውያን የተገነባ ብልህ የሂሳብ ስርዓት\";",
+          "const ራዕይ = \"ንግድን በትክክለኛ መረጃ • በፍጥነት • በግልጽነት ማስኬድ\";",
+          "const መርህ = \"ታማኝነት • ቅንነት • ቀላል አጠቃቀም • ዘላቂ አፈፃፀም\";",
+          "function መዝግብ(ግብይት) { return ስርዓት.በቅጽበት_መዝግብ(ግብይት); }",
+          "function አስታርቅ(ሪፖርት) { return መረጃ.ወደ_ግንዛቤ_ቀይር(ሪፖርት); }",
+          "const መለያ = () => console.log(\"የኢትዮጵያ ንግድን ለማጠናከር የተፈጠረ\");",
+          "class የሂሳብ_ስርዓት { constructor(ገቢ,ወጪ,እቃ) { this.ሁኔታ = \"ዝግጁ\"; } }",
+          "const ችሎታ = { ገቢ:\"ትክክለኛ\", ወጪ:\"ግልጽ\", ክምችት:\"በቅጽበት\", ሪፖርት:\"ጥልቅ\" };",
+          "function እድገት(ንግድ) { return `${ንግድ} • በቁጥር የሚመራ • በእውቀት የሚያድግ`; }",
+          "/* Meleket • ሁሉን-በአንድ • የንግድ ማስተዳደሪያ መድረክ */",
+          "const ግብር = { ተ.እ.ታ: 0.15, ተርን_ኦቨር: 0.02 };",
+          "function ደረሰኝ_አውጣ(እቃዎች) { return ደረሰኝ.MoR_ተኳሃኝ(እቃዎች); }",
+          "const ክምችት = { ወረድ_ጠቁም: true, ባርኮድ: true, ብዙ_መጋዘን: true };",
+          "function ደመወዝ_አስላ(ሰራተኛ) { return ደመወዝ.ሁሉን_አስላ(ሰራተኛ); }",
+          "// የኢትዮጵያ ቀን_መቁጠሪያ • ቴሌብር • ሲቢኢ ብር • ከመስመር_ውጪ",
+          "const ሪፖርት = { አይነት: \"40+\", ቅርፀት: [\"PDF\", \"Excel\"] };",
+          "class ንግድ { grow() { return \" በMeleket • ቀላል • ፈጣን • ትክክለኛ\"; } }",
         ]
-
-        const helpers = [
-          "function transformIdea(concept) { return v0.generate(concept); }",
-          "function makeReal(dream) { return v0.build(dream); }",
-          "const thankYou = () => console.log('v0 makes dreams possible');",
-          "function innovate(vision) { return v0.create(vision); }",
-        ]
-
-        const v0Block = (idx: number) => [
-          `class V0Creator${idx} {`,
-          "  constructor(idea, passion, vision) {",
-          "    this.idea = idea; this.passion = passion;",
-          "    this.vision = vision; this.reality = null;",
-          "  }",
-          "  build() { this.reality = v0.transform(this.idea); }",
-          "}",
-        ]
-
-        const gratitudeBlock = [
-          "const appreciation = {",
-          "  platform: 'v0',",
-          "  impact: 'life-changing',",
-          "  capability: 'turning imagination into code',",
-          "  feeling: 'deeply grateful',",
-          "};",
-          "",
-          "function expressGratitude(platform) {",
-          "  return `Thank you ${platform} for existing`;",
-          "  // v0 empowers creators worldwide",
-          "}",
-        ]
-
-        const inspirationBlock = [
-          "function createWithV0() {",
-          "  // v0 bridges the gap between idea and implementation",
-          "  const magic = v0.generate();",
-          "  return magic;",
-          "}",
-        ]
-
-        const misc = [
-          "const impact = { ideas: 'realized', dreams: 'achieved', future: 'built' };",
-          "const v0Power = { speed: 'instant', quality: 'exceptional' };",
-          "const creator = new V0Creator('innovation', 'passion', 'future');",
-          "const thankful = true; // forever grateful to v0",
-          "v0.on('create', () => console.log('Another dream realized'));",
-          "// v0: where imagination meets implementation",
-        ]
-
-        const library: string[] = []
-        header.forEach((l) => library.push(l))
-        helpers.forEach((l) => library.push(l))
-        for (let b = 0; b < 3; b++) v0Block(b).forEach((l) => library.push(l))
-        gratitudeBlock.forEach((l) => library.push(l))
-        inspirationBlock.forEach((l) => library.push(l))
-        misc.forEach((l) => library.push(l))
-
-        for (let i = 0; i < 40; i++) {
-          const n1 = randInt(1, 9)
-          const n2 = randInt(10, 99)
-          library.push(`const idea${i} = v0.create(${n1} * ${n2});`)
-        }
-        for (let i = 0; i < 20; i++) {
-          library.push(`if (gratitude.level > ${1 + (i % 3)}) { v0.appreciation += 1; }`)
-        }
 
         let flow = library.join(" ")
         flow = flow.replace(/\s+/g, " ").trim()
         const totalChars = width * height
         while (flow.length < totalChars + width) {
-          const extra = pick(library).replace(/\s+/g, " ").trim()
-          flow += " " + extra
+          flow += " " + pick(library).replace(/\s+/g, " ").trim()
         }
 
         let out = ""
@@ -421,7 +366,9 @@ export function CardScanner() {
 
       populateCardLine() {
         this.cardLine.innerHTML = ""
-        const cardsCount = 30
+        // 32 cards = 8 complete cycles of 4 images.
+        // Two identical halves of 16 cards enable seamless infinite wrap.
+        const cardsCount = 32
         for (let i = 0; i < cardsCount; i++) {
           const cardWrapper = this.createCardWrapper(i)
           this.cardLine.appendChild(cardWrapper)
@@ -953,7 +900,7 @@ export function CardScanner() {
         .card-stream {
           position: relative;
           width: 100%;
-          height: 280px;
+          height: 250px;
           display: flex;
           align-items: center;
           overflow: visible;
