@@ -1052,26 +1052,100 @@ export function CardScanner() {
   return (
     <>
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Syne:wght@700;800&family=Dancing+Script:wght@700&display=swap');
 
         .card-scanner-container {
           position: relative;
           width: 100%;
-          height: 100vh;
+          min-height: 100vh;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: #000000;
+          background: #FFF5F3;
           overflow: hidden;
+          padding: 5rem 0 4rem;
+        }
+
+        /* ── Section Header ─────────────────────────────── */
+        .card-scanner-header {
+          text-align: center;
+          margin-bottom: 3.5rem;
+          z-index: 10;
+          position: relative;
+        }
+
+        .card-scanner-eyebrow {
+          display: inline-block;
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #E53935;
+          margin-bottom: 0.75rem;
+          font-family: 'Roboto Mono', monospace;
+        }
+
+        .card-scanner-title {
+          font-family: 'Syne', sans-serif;
+          font-size: clamp(2.75rem, 6vw, 5rem);
+          font-weight: 800;
+          line-height: 1.05;
+          color: #111827;
+          letter-spacing: -0.03em;
+          margin: 0 0 0.25rem;
+        }
+
+        .card-scanner-title .highlight {
+          color: #E53935;
+          font-style: italic;
+          font-family: 'Dancing Script', cursive;
+          font-size: 1.1em;
+        }
+
+        .card-scanner-subtitle {
+          font-family: 'Syne', sans-serif;
+          font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+          font-weight: 700;
+          color: #374151;
+          letter-spacing: -0.02em;
+          margin: 0;
+        }
+
+        .card-scanner-subtitle .replace-word {
+          color: #E53935;
+          text-decoration: line-through;
+          text-decoration-color: rgba(229,57,53,0.4);
+          text-decoration-thickness: 3px;
+        }
+
+        /* Bouncing arrow */
+        .card-scanner-arrow {
+          display: flex;
+          justify-content: center;
+          margin-top: 1.25rem;
+          animation: arrowBounce 1.4s ease-in-out infinite;
+        }
+
+        .card-scanner-arrow svg {
+          width: 36px;
+          height: 36px;
+          color: #E53935;
+        }
+
+        @keyframes arrowBounce {
+          0%, 100% { transform: translateY(0); }
+          50%       { transform: translateY(10px); }
         }
 
         .card-stream {
-          position: absolute;
+          position: relative;
           width: 100%;
-          height: 180px;
+          height: 280px;
           display: flex;
           align-items: center;
           overflow: visible;
+          z-index: 5;
         }
 
         .card-line {
@@ -1156,7 +1230,7 @@ export function CardScanner() {
           left: 0;
           width: 100%;
           height: 100%;
-          color: rgba(220, 210, 255, 0.6);
+          color: rgba(80, 60, 120, 0.55);
           font-family: 'Courier New', monospace;
           font-size: 11px;
           line-height: 13px;
@@ -1278,6 +1352,25 @@ export function CardScanner() {
       <div className="card-scanner-container" ref={containerRef}>
         <canvas ref={particleCanvasRef} id="particleCanvas" />
         <canvas ref={scannerCanvasRef} id="scannerCanvas" />
+
+        {/* Section header */}
+        <div className="card-scanner-header">
+          <span className="card-scanner-eyebrow">Meleket replaces it all</span>
+          <h2 className="card-scanner-title">
+            ALL IN ONE,{" "}
+            <span className="highlight">one app.</span>
+          </h2>
+          <p className="card-scanner-subtitle">
+            To{" "}
+            <span className="replace-word">REPLACE</span>
+          </p>
+          <div className="card-scanner-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <polyline points="19 12 12 19 5 12" />
+            </svg>
+          </div>
+        </div>
 
         <div className="card-stream" ref={cardStreamRef}>
           <div className="card-line" ref={cardLineRef}></div>
