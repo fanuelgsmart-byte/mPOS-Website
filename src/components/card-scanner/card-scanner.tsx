@@ -304,12 +304,20 @@ export function CardScanner() {
           "/cards/cash-register.png",
           "/cards/pos-machine.png",
           "/cards/peachtree-software.png",
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/card-v0%20%281%29-HgN8MWOotWPF2GDoRZvNWcfDHIBux4.png", // TODO: replace with app image
+        ]
+
+        const cardAltTexts = [
+          "Cash Register",
+          "POS Machine",
+          "Peachtree Software",
+          "Meleket App",
         ]
 
         const cardImage = document.createElement("img")
         cardImage.className = "card-image"
         cardImage.src = cardImages[index % cardImages.length]
-        cardImage.alt = ["Cash Register", "POS Machine", "Peachtree Software"][index % 3]
+        cardImage.alt = cardAltTexts[index % cardImages.length]
 
         cardImage.onerror = () => {
           const canvas = document.createElement("canvas")
