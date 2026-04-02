@@ -15,51 +15,52 @@ export default function Hero() {
       className="relative overflow-hidden"
       style={{
         minHeight: "calc(100vh - 72px)",
-        background: "#FFF5F3",
+        background: "#F8EFF1",
         display: "flex",
         flexDirection: "column",
+        paddingBottom: "7.5rem",
       }}
     >
-      <div className="container-custom flex flex-col lg:flex-row items-center flex-1 relative gap-8 lg:gap-0">
+      <div
+        className="container-custom flex flex-col lg:flex-row items-start flex-1 relative gap-10 lg:gap-0"
+        style={{ maxWidth: "1720px", paddingTop: "2.5rem" }}
+      >
         {/* LEFT — Text content */}
         <motion.div
           variants={staggerContainer(0.12)}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="w-full lg:w-1/2 py-10 lg:py-16 z-10"
+          className="w-full lg:w-1/2 py-8 lg:py-14 z-10"
+          style={{ paddingLeft: "0.5rem" }}
         >
-          {/* Main title + elevated accent together */}
+          {/* Main title + script accent */}
           <motion.div variants={fadeUp} style={{ position: "relative", display: "inline-block" }}>
-            {/* "(even more)" floats above the ^ — positioned relative to the h1 */}
             <span
               style={{
                 fontFamily: "'Dancing Script', cursive",
-                fontSize: "clamp(1.125rem, 2.5vw, 1.75rem)",
-                color: "#E53935",
+                fontSize: "clamp(1.15rem, 2.5vw, 1.85rem)",
+                color: "#111827",
                 fontWeight: 600,
                 position: "absolute",
                 left: "calc(100% * 0.58)",
-                top: "-1.5rem",
+                top: "-1.45rem",
                 whiteSpace: "nowrap",
               }}
             >
-              (even more)
+              (aur bhi)
             </span>
             <h1
               style={{
-                fontSize: "clamp(2.75rem, 6vw, 4.25rem)",
-                fontWeight: 900,
-                lineHeight: 1.1,
+                fontSize: "clamp(3.2rem, 5.4vw, 5.15rem)",
+                fontWeight: 700,
+                lineHeight: 1.02,
                 color: "#111827",
                 letterSpacing: "-0.02em",
+                marginBottom: 0,
               }}
             >
-              Business
-              <span style={{ position: "relative" }}>
-                {" "}
-                <span style={{ color: "#E53935", fontSize: "0.5em", verticalAlign: "super" }}>^</span>
-                {" "}
-              </span>
+              Business hua
+              <span style={{ color: "#111827", fontSize: "0.48em", verticalAlign: "super" }}>^</span>
               easy
             </h1>
           </motion.div>
@@ -69,14 +70,14 @@ export default function Hero() {
             variants={fadeUp}
             style={{
               fontSize: "clamp(1.125rem, 2vw, 1.5rem)",
-              color: "#6B7280",
-              marginTop: "1rem",
-              marginBottom: "3rem",
+              color: "#111827",
+              marginTop: "1.25rem",
+              marginBottom: "2.6rem",
               fontWeight: 400,
               lineHeight: 1.4,
             }}
           >
-            with Meleket on Desktop
+            with Khatabook on Desktop
           </motion.p>
 
           {/* Phone number form */}
@@ -84,6 +85,7 @@ export default function Hero() {
             variants={fadeUp}
             className="flex flex-col sm:flex-row gap-3 mb-12"
             onSubmit={(e) => e.preventDefault()}
+            style={{ alignItems: "stretch" }}
           >
             <div
               className="flex"
@@ -92,20 +94,22 @@ export default function Hero() {
                 borderRadius: "10px",
                 overflow: "hidden",
                 background: "#FFFFFF",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-                maxWidth: "420px",
+                boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+                width: "100%",
+                maxWidth: "610px",
+                minHeight: "66px",
               }}
             >
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  padding: "0.875rem 1.25rem",
+                  padding: "1.05rem 1.35rem",
                   borderRight: "1px solid #E5E7EB",
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontSize: "16px", color: "#374151", fontWeight: 600 }}>+251</span>
+                <span style={{ fontSize: "16px", color: "#111827", fontWeight: 500 }}>+91</span>
               </div>
               <input
                 type="tel"
@@ -117,7 +121,7 @@ export default function Hero() {
                   outline: "none",
                   fontSize: "1rem",
                   color: "#111827",
-                  padding: "0.875rem 1.25rem",
+                  padding: "1rem 1.35rem",
                   minWidth: 0,
                   background: "transparent",
                 }}
@@ -133,10 +137,12 @@ export default function Hero() {
                 border: "none",
                 borderRadius: "10px",
                 cursor: "pointer",
-                padding: "0.875rem 2.75rem",
+                padding: "0.875rem 2.8rem",
                 whiteSpace: "nowrap",
                 transition: "all 150ms ease",
                 boxShadow: "0 2px 8px rgba(229,57,53,0.25)",
+                minHeight: "66px",
+                minWidth: "285px",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#C62828";
@@ -175,7 +181,7 @@ export default function Hero() {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
               {[
-                "Manage Digital\nBusiness Ledger",
+                "Manage Digital\nBahi Khata",
                 "Send Payment Reminders for\neasy collection",
               ].map((text, i) => (
                 <div key={i} className="flex items-start gap-6">
@@ -213,17 +219,18 @@ export default function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="w-full lg:w-1/2 relative flex items-center justify-end"
-          style={{ paddingRight: 0 }}
+          className="w-full lg:w-1/2 relative flex items-end justify-end"
+          style={{ minHeight: 640, paddingRight: 0, overflow: "visible" }}
         >
           <Image
             src="/hero-mockup.svg"
             alt="Meleket app dashboard and mobile interface"
-            width={900}
-            height={900}
+            width={1100}
+            height={950}
             priority
             className="w-full h-auto object-contain"
-            style={{ maxWidth: "100%" }}
+            style={{ maxWidth: "150%", transform: "translate(9%, 5%)" }}
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </motion.div>
       </div>

@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
+import NextImage from "next/image"
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { COMPLIANCE_TABS } from "@/lib/constants";
 import { FileCheck, Calculator, ShieldCheck, Download, ArrowRight } from "lucide-react";
+import { FloatingPaths } from "@/components/ui/FloatingPaths";
 
 const TAB_ICONS = [FileCheck, Calculator, ShieldCheck, Download];
 
@@ -14,22 +16,24 @@ export default function EffortlessCompliance() {
   const tab = COMPLIANCE_TABS[activeTab];
 
   return (
-    <section id="compliance" ref={ref} className="section-padding" style={{ background: "#F9FAFB" }}>
-      <div className="container-custom">
+    <section id="compliance" ref={ref} className="section-padding" style={{ background: "#F9FAFB", position: "relative", overflow: "hidden" }}>
+      {/* Animated Background Paths */}
+      <div className="absolute inset-0" style={{ opacity: 0.35 }}>
+        <FloatingPaths position={1} />
+        <FloatingPaths position={-1} />
+      </div>
+
+      <div className="container-custom" style={{ position: "relative", zIndex: 10 }}>
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="mb-10 max-w-6xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Experience Effortless Compliance
+          <h2 className="text-3xl md:text-5xl font-bold text-[#1F2937] leading-tight">
+            Experience Effortless Compliance with <br/> Meleket Invoicing Software
           </h2>
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-base">
-            Stop worrying about tax compliance. Every invoice, every report,
-            every submission — handled automatically.
-          </p>
         </motion.div>
 
         {/* Main Layout: Vertical tabs on left, content on right */}
@@ -49,8 +53,9 @@ export default function EffortlessCompliance() {
                   onClick={() => setActiveTab(i)}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left"
                   style={{
-                    background: activeTab === i ? "#F3E8FF" : "transparent",
-                    border: activeTab === i ? "1px solid #E9D5FF" : "1px solid transparent",
+                    background: activeTab === i ? "#F4F0FF" : "#FFFFFF",
+                    border: activeTab === i ? "1px solid #F4F0FF" : "1px solid #F3F4F6",
+                    boxShadow: activeTab === i ? "none" : "0 1px 2px rgba(0,0,0,0.05)",
                   }}
                   whileHover={{ x: 4 }}
                 >
@@ -62,9 +67,10 @@ export default function EffortlessCompliance() {
                     }}
                   />
                   <span
-                    className="text-sm font-medium"
+                    className="text-sm"
                     style={{
-                      color: activeTab === i ? "#4F46E5" : "#6B7280",
+                      color: activeTab === i ? "#6366F1" : "#111827",
+                      fontWeight: activeTab === i ? 600 : 500,
                     }}
                   >
                     {t.label}
@@ -83,7 +89,7 @@ export default function EffortlessCompliance() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-xl overflow-hidden border border-gray-200"
+                className="bg-white rounded-2xl overflow-hidden border border-gray-200"
               >
                 {/* Feature Image */}
                 <div className="relative w-full" style={{ minHeight: "300px" }}>
@@ -118,10 +124,10 @@ export default function EffortlessCompliance() {
 
 function ComplianceImage({ tabIndex }: { tabIndex: number }) {
   const images = [
-    "mor", // MoR e-Invoicing
-    "vat", // VAT & TOT
-    "insa", // INSA Security
-    "export", // Data Export
+    "gst-filing", // MoR e-Invoicing tab mapped to user's first image
+    "e-invoicing", // VAT & TOT mapped to user's second image
+    "e-way-billing", // INSA Security mapped to user's third image
+    "data-export", // Data Export
   ];
   const imageName = images[tabIndex];
 
@@ -131,19 +137,18 @@ function ComplianceImage({ tabIndex }: { tabIndex: number }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="w-full h-full relative bg-gray-100 flex items-center justify-center"
-      style={{ minHeight: "300px" }}
+      className="w-full h-full relative bg-[#F8FAFC] flex items-center justify-center p-8"
+      style={{ minHeight: "350px" }}
     >
-      <img
-        src={`/static-assets/images/landing-page-v2/${imageName}-compliance.webp`}
+      <NextImage
+        src={`/images/compliance/${imageName}.webp`}
         alt={`${imageName} compliance feature`}
-        className="w-full h-full object-cover"
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.style.display = "none";
-        }}
+        width={500}
+        height={350}
+        className="w-full h-full object-contain drop-shadow-sm z-10"
+        loading="lazy"
       />
-      {/* Fallback placeholder */}
+      {/* Fallback placeholder - only shown if image fails or is loading */}
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
         <div className="text-5xl mb-3">📋</div>
         <div className="text-sm font-medium text-gray-600">

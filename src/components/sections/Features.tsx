@@ -40,7 +40,7 @@ export default function Features() {
   const Icon = activeFeature ? ICON_MAP[activeFeature.icon] : null;
 
   return (
-    <section id="features" ref={ref} style={{ background: "#F9FAFB" }} className="section-padding">
+    <section id="features" ref={ref} style={{ background: "#FFFFFF" }} className="section-padding">
       <div className="container-custom">
         {/* Heading */}
         <motion.div
