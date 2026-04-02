@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 /* ─── Design Tokens (Khatabook-inspired clean palette) ── */
-@theme {
+:root {
   --color-green:        #22C55E;
   --color-green-dark:   #16A34A;
   --color-green-light:  #DCFCE7;
@@ -331,3 +331,67 @@ p  { font-size: 1rem; font-weight: 400; line-height: 1.7; color: #4B5563; }
   100% { transform: translateX(-50%); }
 }
 .animate-marquee { animation: marquee 20s linear infinite; }
+
+/* ─── Login Modal Utilities ───────────────────────────── */
+.glass-effect {
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-effect::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+.ripple-effect:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* ─── Login Page Design Tokens (shadcn/ui) ────────────── */
+:root {
+  --background: oklch(0.98 0.02 85);
+  --foreground: oklch(0.35 0.02 220);
+  --card: oklch(1 0 0 / 0.7);
+  --card-foreground: oklch(0.35 0.02 220);
+  --popover: oklch(1 0 0 / 0.9);
+  --popover-foreground: oklch(0.35 0.02 220);
+  --primary: oklch(0.65 0.15 45);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.75 0.12 50);
+  --secondary-foreground: oklch(0.35 0.02 220);
+  --muted: oklch(0.98 0.02 85);
+  --muted-foreground: oklch(0.35 0.02 220);
+  --accent: oklch(0.75 0.12 50);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0.01 85);
+  --input: oklch(1 0 0);
+  --ring: oklch(0.65 0.15 45 / 0.5);
+  --radius: 1rem;
+}
+
+

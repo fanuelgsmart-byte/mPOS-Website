@@ -5,10 +5,13 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 import { SITE_NAME } from "@/lib/constants";
+import { useRouter } from "next/navigation";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -45,25 +48,23 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop right — Khatabook: phone pill + Log In */}
+          {/* Desktop right */}
           <div className="hidden md:flex items-center gap-3">
             <a
               href="tel:+251911000000"
               className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
-              style={{ background: "#1F2937", color: "#FFFFFF" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#111827")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#1F2937")}
+              style={{ background: "#FCEDED", color: "#111827" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#F9E1E1")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#FCEDED")}
             >
-              <Phone size={14} strokeWidth={2.5} />
+              <Phone size={14} strokeWidth={2.5} color="#E53935" />
               <span>+251 911 000 000</span>
             </a>
-            <Link
-              href="#download"
-              className="px-5 py-2.5 rounded-full text-sm font-medium transition-colors hover:bg-gray-50"
-              style={{ border: "1.5px solid #D1D5DB", color: "#374151" }}
-            >
-              Log In
-            </Link>
+            <LiquidMetalButton
+              label="Log In"
+              variant="red"
+              onClick={() => router.push("/login")}
+            />
           </div>
 
           {/* Mobile toggle */}
@@ -93,9 +94,9 @@ export default function Navbar() {
               <a
                 href="tel:+251911000000"
                 className="flex items-center justify-center gap-2 py-3 rounded-full text-sm font-semibold"
-                style={{ background: "#1F2937", color: "#FFFFFF" }}
+                style={{ background: "#FCEDED", color: "#111827" }}
               >
-                <Phone size={14} strokeWidth={2.5} />
+                <Phone size={14} strokeWidth={2.5} color="#E53935" />
                 +251 911 000 000
               </a>
               <Link
@@ -106,14 +107,16 @@ export default function Navbar() {
               >
                 Get Started
               </Link>
-              <Link
-                href="#download"
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center justify-center py-3 rounded-full text-sm font-medium"
-                style={{ border: "1.5px solid #D1D5DB", color: "#374151" }}
-              >
-                Log In
-              </Link>
+              <div className="flex justify-center -ml-2">
+                <LiquidMetalButton
+                  label="Log In"
+                  variant="red"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    router.push("/login");
+                  }}
+                />
+              </div>
             </div>
           </motion.div>
         )}

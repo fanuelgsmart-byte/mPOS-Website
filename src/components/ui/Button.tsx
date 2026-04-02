@@ -34,7 +34,7 @@ export default function Button({
     const ripple = document.createElement("span");
     ripple.className = "ripple";
     ripple.style.left = `${e.clientX - rect.left - 20}px`;
-    ripple.style.top  = `${e.clientY - rect.top  - 20}px`;
+    ripple.style.top = `${e.clientY - rect.top - 20}px`;
     btn.appendChild(ripple);
     ripple.addEventListener("animationend", () => ripple.remove());
   }
@@ -59,7 +59,12 @@ export default function Button({
       whileTap={disabled ? undefined : btnTap}
       className={cls}
       style={style}
-      onClick={(e) => { if (!disabled) { handleRipple(e); onClick?.(); } }}
+      onClick={(e) => {
+        if (!disabled) {
+          handleRipple(e);
+          onClick?.();
+        }
+      }}
       disabled={disabled}
       type={type}
     >

@@ -180,7 +180,8 @@ export default function GetStartedCTA() {
                   width: "auto",
                   maxWidth: "none",
                 }}
-                priority
+                loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 30vw"
               />
             </div>
 
