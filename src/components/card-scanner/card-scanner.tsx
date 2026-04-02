@@ -1140,18 +1140,16 @@ export function CardScanner() {
 
         #scannerCanvas {
           position: absolute;
-          top: 50%;
+          top: 0;
           left: -3px;
-          transform: translateY(-50%);
           width: 100%;
-          height: 250px;
+          height: 100%;
           z-index: 15;
           pointer-events: none;
         }
       `}</style>
 
       <div className="card-scanner-container" ref={containerRef}>
-        <canvas ref={scannerCanvasRef} id="scannerCanvas" />
 
         {/* Section header */}
         <div className="card-scanner-header">
@@ -1173,6 +1171,7 @@ export function CardScanner() {
         </div>
 
         <div className="card-stream" ref={cardStreamRef}>
+          <canvas ref={scannerCanvasRef} id="scannerCanvas" />
           <div className="card-line" ref={cardLineRef}></div>
         </div>
       </div>
