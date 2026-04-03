@@ -223,8 +223,8 @@ export default function Hero() {
           style={{ minHeight: 640, paddingRight: 0, overflow: "visible" }}
         >
           <Image
-            src="/hero-mockup.svg"
-            alt="Meleket app dashboard and mobile interface"
+            src="/wenchef-hero.png"
+            alt="Wenchef app dashboard and mobile interface"
             width={1100}
             height={950}
             priority
