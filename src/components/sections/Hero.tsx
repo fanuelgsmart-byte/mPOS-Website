@@ -223,7 +223,7 @@ export default function Hero() {
           style={{ minHeight: 640, paddingRight: 0, overflow: "visible" }}
         >
           <Image
-            src="/Hero.tsx.png"
+            src="/Gemini_Generated_Image_cwh01hcwh01hcwh0.png"
             alt="Wenchef app dashboard and mobile interface"
             width={1100}
             height={950}
