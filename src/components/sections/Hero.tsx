@@ -229,7 +229,7 @@ export default function Hero() {
             height={950}
             priority
             className="w-full h-auto object-contain"
-            style={{ maxWidth: "150%", transform: "translate(9%, 5%)" }}
+            style={{ maxWidth: "150%", transform: "translate(9%, 5%)", mixBlendMode: "multiply" }}
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </motion.div>
