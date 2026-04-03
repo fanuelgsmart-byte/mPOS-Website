@@ -4,32 +4,16 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { FEATURE_TABS } from "@/lib/constants";
 import {
-  ShoppingCart,
-  FileText,
-  Package,
-  Palette,
-  Receipt,
-  ArrowLeftRight,
-  BarChart2,
-  CloudUpload,
-  Printer,
-  Users,
-  Globe,
+  ShoppingCart, FileText, Package, Palette, Receipt,
+  ArrowLeftRight, BarChart2, CloudUpload, Printer, Users, Globe,
 } from "lucide-react";
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>> = {
-  ShoppingCart,
-  FileText,
-  Package,
-  Palette,
-  Receipt,
-  ArrowLeftRight,
-  BarChart2,
-  CloudUpload,
-  Printer,
-  Users,
-  Globe,
+  ShoppingCart, FileText, Package, Palette, Receipt,
+  ArrowLeftRight, BarChart2, CloudUpload, Printer, Users, Globe,
 };
+
+const spring = { type: "spring", stiffness: 200, damping: 24 } as const;
 
 export default function Features() {
   const ref = useRef<HTMLDivElement>(null);
@@ -46,152 +30,159 @@ export default function Features() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={spring}
           className="text-center mb-14"
         >
+          <span style={{ display: "inline-block", background: "#FFF0EE", color: "#E53935", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.3rem 0.875rem", borderRadius: "999px", marginBottom: "1rem" }}>
+            Everything Built In
+          </span>
           <h2
             style={{
-              fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
+              fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
               fontWeight: 800,
               lineHeight: 1.15,
-              letterSpacing: "-0.02em",
-              color: "#1F2937",
+              letterSpacing: "-0.025em",
+              color: "#0F172A",
             }}
           >
-            Features of MoR Billing and
+            Features of MoR Billing &amp;
             <br />
             Accounting Software
           </h2>
+          <p style={{ fontSize: "1rem", color: "#6B7280", marginTop: "0.75rem", maxWidth: "480px", margin: "0.75rem auto 0" }}>
+            Everything your Ethiopian business needs — from POS billing to payroll — in one app.
+          </p>
         </motion.div>
 
         {/* Vertical Tab Layout */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
+          transition={{ ...spring, delay: 0.12 }}
           className="flex flex-col lg:flex-row gap-8 lg:gap-12"
         >
           {/* Left — Tab List */}
-          <div className="w-full lg:w-[45%] flex flex-col gap-2.5 lg:max-h-[600px] lg:overflow-y-auto vertical-tab-scrollbar">
+          <div className="w-full lg:w-[42%] flex flex-col gap-2 lg:max-h-[600px] lg:overflow-y-auto vertical-tab-scrollbar">
             {FEATURE_TABS.map((tab, index) => {
               const TabIcon = ICON_MAP[tab.icon];
               const isActive = activeTab === index;
-
               return (
-                <button
+                <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(index)}
-                  className="vertical-tab-item"
+                  whileHover={{ x: isActive ? 0 : 4 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
                   style={{
                     display: "flex",
                     alignItems: "center",
                     gap: "1rem",
-                    padding: "1.25rem 1.5rem",
+                    padding: "1.125rem 1.375rem",
                     borderRadius: "12px",
-                    border: "1px solid transparent",
+                    border: `1.5px solid ${isActive ? "rgba(229,57,53,0.2)" : "#F3F4F6"}`,
                     cursor: "pointer",
                     textAlign: "left",
                     width: "100%",
-                    transition: "all 200ms ease",
-                    background: isActive ? "#EEF0FF" : "#FFFFFF",
-                    borderColor: isActive ? "#C7D2FE" : "#F3F4F6",
+                    background: isActive ? "#FFF0EE" : "#FFFFFF",
                     borderLeftWidth: "4px",
-                    borderLeftColor: isActive ? "#4F46E5" : "transparent",
-                    boxShadow: isActive
-                      ? "0 4px 12px rgba(79,70,229,0.08)"
-                      : "0 1px 3px rgba(0,0,0,0.04)",
+                    borderLeftColor: isActive ? "#E53935" : "transparent",
+                    boxShadow: isActive ? "0 4px 16px rgba(229,57,53,0.08)" : "0 1px 3px rgba(0,0,0,0.04)",
+                    transition: "background 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) {
                       e.currentTarget.style.background = "#FAFAFA";
                       e.currentTarget.style.borderColor = "#E5E7EB";
-                      e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) {
                       e.currentTarget.style.background = "#FFFFFF";
                       e.currentTarget.style.borderColor = "#F3F4F6";
-                      e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.04)";
                     }
                   }}
                 >
-                  {/* Icon */}
                   <div
                     style={{
-                      width: "44px",
-                      height: "44px",
+                      width: "42px",
+                      height: "42px",
                       borderRadius: "50%",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
-                      border: `1.5px solid ${isActive ? "#E53935" : "#D1D5DB"}`,
-                      background: isActive ? "rgba(229,57,53,0.06)" : "transparent",
+                      border: `1.5px solid ${isActive ? "rgba(229,57,53,0.3)" : "#E5E7EB"}`,
+                      background: isActive ? "rgba(229,57,53,0.08)" : "transparent",
                       transition: "all 200ms ease",
                     }}
                   >
-                    {TabIcon && (
-                      <TabIcon
-                        size={20}
-                        color={isActive ? "#E53935" : "#9CA3AF"}
-                        strokeWidth={1.8}
-                      />
-                    )}
+                    {TabIcon && <TabIcon size={19} color={isActive ? "#E53935" : "#9CA3AF"} strokeWidth={1.8} />}
                   </div>
-
-                  {/* Title */}
-                  <span
-                    style={{
-                      fontSize: "0.9375rem",
-                      fontWeight: isActive ? 700 : 500,
-                      color: isActive ? "#1F2937" : "#4B5563",
-                      transition: "all 200ms ease",
-                    }}
-                  >
+                  <span style={{ fontSize: "0.9375rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#0F172A" : "#4B5563", transition: "all 180ms ease" }}>
                     {tab.title}
                   </span>
-                </button>
+                </motion.button>
               );
             })}
           </div>
 
           {/* Right — Content Panel */}
-          <div className="w-full lg:w-[55%] lg:sticky lg:top-24 lg:self-start">
+          <div className="w-full lg:w-[58%] lg:sticky lg:top-24 lg:self-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFeature.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.3 }}
-                style={{ paddingTop: "0.5rem" }}
+                initial={{ opacity: 0, x: 16, scale: 0.99 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -8, scale: 0.99 }}
+                transition={{ type: "spring", stiffness: 220, damping: 26 }}
+                style={{
+                  background: "#F8FAFC",
+                  borderRadius: "18px",
+                  padding: "2.25rem 2.5rem",
+                  border: "1px solid #E5E7EB",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
               >
-                <h3
-                  style={{
-                    fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)",
-                    fontWeight: 800,
-                    color: "#1F2937",
-                    marginBottom: "1.5rem",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {activeFeature.title}
-                </h3>
+                {/* Accent glow */}
+                <div style={{ position: "absolute", top: "-30px", right: "-30px", width: "160px", height: "160px", background: "radial-gradient(circle, rgba(229,57,53,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-                <div
-                  style={{
-                    fontSize: "0.9375rem",
-                    lineHeight: 1.8,
-                    color: "#4B5563",
-                  }}
-                >
-                  {activeFeature.content.split("\n").map((paragraph, i) => (
-                    <p key={i} style={{ marginBottom: "1rem" }}>
-                      {paragraph}
-                    </p>
+                {/* Icon + title */}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.25rem" }}>
+                  <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: "rgba(229,57,53,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    {Icon && <Icon size={24} color="#E53935" strokeWidth={1.8} />}
+                  </div>
+                  <h3 style={{ fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)", fontWeight: 800, color: "#0F172A", lineHeight: 1.25 }}>
+                    {activeFeature.title}
+                  </h3>
+                </div>
+
+                <div style={{ fontSize: "0.9375rem", lineHeight: 1.85, color: "#4B5563" }}>
+                  {activeFeature.content.split("\n").map((para, i) => (
+                    <p key={i} style={{ marginBottom: "1rem" }}>{para}</p>
                   ))}
                 </div>
+
+                {/* CTA */}
+                <a
+                  href="#get-started"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.375rem",
+                    color: "#E53935",
+                    fontWeight: 700,
+                    fontSize: "0.875rem",
+                    textDecoration: "none",
+                    marginTop: "0.5rem",
+                    borderBottom: "2px solid rgba(229,57,53,0.3)",
+                    paddingBottom: "1px",
+                    transition: "border-color 150ms ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#E53935")}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(229,57,53,0.3)")}
+                >
+                  Learn more about this feature →
+                </a>
               </motion.div>
             </AnimatePresence>
           </div>

@@ -1,78 +1,101 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { staggerContainer, fadeUp } from "@/lib/motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { TOP_BENEFITS } from "@/lib/constants";
 import {
-  ShoppingCart,
-  BarChart2,
-  Wallet,
-  Wifi,
-  CreditCard,
-  Shield,
-  Award,
-  Package,
+  ShoppingCart, BarChart2, Wallet, Wifi, CreditCard, Shield, Award, Package,
 } from "lucide-react";
-import Image from "next/image";
 
-const ICON_MAP: Record<
-  string,
-  React.ComponentType<{ size?: number; color?: string }>
-> = {
-  ShoppingCart,
-  BarChart2,
-  Wallet,
-  Wifi,
-  CreditCard,
-  Shield,
-  Award,
-  Package,
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>> = {
+  ShoppingCart, BarChart2, Wallet, Wifi, CreditCard, Shield, Award, Package,
 };
 
-const leftBenefits = TOP_BENEFITS.slice(0, 4);
-const rightBenefits = TOP_BENEFITS.slice(4, 8);
+const spring = { type: "spring", stiffness: 200, damping: 24 } as const;
 
-function BenefitCard({
-  benefit,
-  align,
-}: {
-  benefit: (typeof TOP_BENEFITS)[number];
-  align: "left" | "right";
-}) {
-  const [expanded, setExpanded] = useState(false);
+function BenefitCard({ benefit, index }: { benefit: typeof TOP_BENEFITS[number]; index: number }) {
+  const [open, setOpen] = useState(false);
   const Icon = ICON_MAP[benefit.icon];
-  const isRight = align === "right";
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-30px" });
 
   return (
-    <div
-      className={`flex gap-4 ${isRight ? "flex-row-reverse text-right" : "flex-row text-left"}`}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ ...spring, delay: (index % 4) * 0.07 }}
+      style={{
+        background: "#fff",
+        borderRadius: "14px",
+        padding: "1.375rem",
+        border: `1.5px solid ${open ? "rgba(229,57,53,0.2)" : "#E5E7EB"}`,
+        boxShadow: open ? "0 4px 16px rgba(229,57,53,0.07)" : "0 1px 4px rgba(0,0,0,0.04)",
+        transition: "border-color 200ms ease, box-shadow 200ms ease",
+        cursor: "pointer",
+      }}
+      whileHover={{ y: -2 }}
+      onClick={() => setOpen(!open)}
     >
-      {/* Icon */}
-      <div
-        className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center mt-1"
-        style={{ background: `${benefit.color}15` }}
-      >
-        {Icon && <Icon size={20} color={benefit.color} />}
-      </div>
-
-      {/* Text content */}
-      <div className="flex-1 min-w-0">
-        <h4 className="text-base font-bold text-gray-800 mb-2">
-          {benefit.title}
-        </h4>
-        <p className="text-sm text-gray-500 leading-relaxed whitespace-pre-line">
-          {expanded ? benefit.fullText : benefit.shortText}
-        </p>
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="mt-2 text-sm font-medium border-none bg-transparent cursor-pointer"
-          style={{ color: "#EF4444" }}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "0.875rem" }}>
+        {/* Icon */}
+        <motion.div
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          transition={spring}
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "10px",
+            background: `${benefit.color}15`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
         >
-          {expanded ? "- Read less" : "+ Read more"}
-        </button>
+          {Icon && <Icon size={20} color={benefit.color} strokeWidth={1.8} />}
+        </motion.div>
+
+        {/* Text */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
+            <h4 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0F172A", lineHeight: 1.3 }}>
+              {benefit.title}
+            </h4>
+            <motion.span
+              animate={{ rotate: open ? 180 : 0 }}
+              transition={spring}
+              style={{ color: "#9CA3AF", flexShrink: 0, fontSize: "0.75rem" }}
+            >
+              ▼
+            </motion.span>
+          </div>
+          <p style={{ fontSize: "0.875rem", color: "#6B7280", lineHeight: 1.6, marginTop: "0.375rem" }}>
+            {benefit.shortText}
+          </p>
+
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.22 }}
+                style={{ overflow: "hidden" }}
+              >
+                <div style={{ paddingTop: "0.75rem", borderTop: "1px solid #F3F4F6", marginTop: "0.75rem" }}>
+                  {benefit.fullText.split("\n\n").slice(1).map((para, i) => (
+                    <p key={i} style={{ fontSize: "0.875rem", color: "#4B5563", lineHeight: 1.7, marginBottom: i < 1 ? "0.625rem" : 0 }}>
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -81,75 +104,85 @@ export default function AndMore() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="section-padding bg-white">
+    <section ref={ref} className="section-padding" style={{ background: "#F8FAFC" }}>
       <div className="container-custom">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
+          transition={spring}
+          className="text-center mb-12"
         >
-          <h2>Top 8 Benefits of Meleket Billing Software</h2>
+          <span style={{ display: "inline-block", background: "#F0FDF4", color: "#059669", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.3rem 0.875rem", borderRadius: "999px", marginBottom: "1rem" }}>
+            Why businesses choose us
+          </span>
+          <h2
+            style={{
+              fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
+              fontWeight: 800,
+              lineHeight: 1.15,
+              letterSpacing: "-0.025em",
+              color: "#0F172A",
+            }}
+          >
+            Top 8 Benefits of Meleket
+            <br />
+            Billing Software
+          </h2>
+          <p style={{ fontSize: "1rem", color: "#6B7280", marginTop: "0.75rem" }}>
+            Click any benefit to learn more
+          </p>
         </motion.div>
 
-        {/* Mobile: center image */}
-        <div className="flex justify-center mb-10 lg:hidden">
-          <Image
-            src="/benefits_of_gst_billing_and_invoicing_software.webp"
-            alt="Meleket Billing App"
-            width={280}
-            height={380}
-            className="object-contain"
-          />
+        {/* Grid of benefit cards */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gap: "1rem",
+          }}
+        >
+          {TOP_BENEFITS.map((benefit, i) => (
+            <BenefitCard key={benefit.id} benefit={benefit} index={i} />
+          ))}
         </div>
 
-        {/* 3-column layout */}
+        {/* Bottom stats strip */}
         <motion.div
-          variants={staggerContainer(0.08)}
-          initial="hidden"
-          animate={inView ? "show" : "hidden"}
-          className="flex flex-col lg:flex-row gap-8 lg:gap-6 items-start"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ ...spring, delay: 0.4 }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+            gap: "0",
+            marginTop: "3rem",
+            background: "#fff",
+            borderRadius: "16px",
+            border: "1px solid #E5E7EB",
+            overflow: "hidden",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+          }}
         >
-          {/* Left column - benefits 1-4, right-aligned text */}
-          <motion.div
-            variants={staggerContainer(0.1)}
-            initial="hidden"
-            animate={inView ? "show" : "hidden"}
-            className="flex-1 flex flex-col gap-8"
-          >
-            {leftBenefits.map((b) => (
-              <motion.div key={b.id} variants={fadeUp}>
-                <BenefitCard benefit={b} align="right" />
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Center column - phone image (desktop only) */}
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center self-center"
-               style={{ width: 350 }}>
-            <Image
-              src="/benefits_of_gst_billing_and_invoicing_software.webp"
-              alt="Meleket Billing App"
-              width={350}
-              height={470}
-              className="object-contain"
-            />
-          </div>
-
-          {/* Right column - benefits 5-8, left-aligned text */}
-          <motion.div
-            variants={staggerContainer(0.1)}
-            initial="hidden"
-            animate={inView ? "show" : "hidden"}
-            className="flex-1 flex flex-col gap-8"
-          >
-            {rightBenefits.map((b) => (
-              <motion.div key={b.id} variants={fadeUp}>
-                <BenefitCard benefit={b} align="left" />
-              </motion.div>
-            ))}
-          </motion.div>
+          {[
+            { value: "5,000+", label: "Businesses", icon: "🏪" },
+            { value: "ETB 2B+", label: "Processed", icon: "💳" },
+            { value: "40+", label: "Reports", icon: "📊" },
+            { value: "4.8★", label: "Play Store", icon: "⭐" },
+          ].map((s, i, arr) => (
+            <div
+              key={s.label}
+              style={{
+                padding: "1.5rem",
+                textAlign: "center",
+                borderRight: i < arr.length - 1 ? "1px solid #F3F4F6" : "none",
+              }}
+            >
+              <div style={{ fontSize: "1.25rem", marginBottom: "0.375rem" }}>{s.icon}</div>
+              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#E53935", letterSpacing: "-0.025em" }}>{s.value}</div>
+              <div style={{ fontSize: "0.8125rem", color: "#6B7280", fontWeight: 500, marginTop: "2px" }}>{s.label}</div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
